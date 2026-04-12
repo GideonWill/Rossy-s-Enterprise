@@ -1,8 +1,8 @@
-# Workspace
+# Gifts N More Shop
 
 ## Overview
 
-pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
+Premium e-commerce gift shop website clone of giftsnmoreshopgh.com, built as a single-page React app with elevated UI/UX. No backend — all product data is hardcoded.
 
 ## Stack
 
@@ -10,18 +10,34 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Node.js version**: 24
 - **Package manager**: pnpm
 - **TypeScript version**: 5.9
-- **API framework**: Express 5
-- **Database**: PostgreSQL + Drizzle ORM
-- **Validation**: Zod (`zod/v4`), `drizzle-zod`
-- **API codegen**: Orval (from OpenAPI spec)
-- **Build**: esbuild (CJS bundle)
+- **Frontend**: React + Vite + Tailwind CSS v4
+- **Routing**: wouter
+- **Animations**: framer-motion
+- **Fonts**: DM Sans (body), Playfair Display (headings)
+- **UI Components**: shadcn/ui (Radix-based)
+
+## Structure
+
+- `artifacts/gifts-n-more/` — Main gift shop website (react-vite, preview at `/`)
+- `artifacts/gifts-n-more/src/pages/home.tsx` — Full single-page home with 9 sections
+- `artifacts/gifts-n-more/src/data.ts` — Product catalog (20 products, 6 categories)
+- `artifacts/gifts-n-more/src/index.css` — Theme with warm cream/charcoal/gold palette
+
+## Features
+
+- Hero section with real banner image and parallax
+- 6 gift categories: Gift Packages, Fashion & Accessories, Home & Fragrance, Jewelry, Gift Boxes, Mugs & Tea Sets
+- 20 real products with actual images from the original site
+- Category filtering in collection section
+- Scroll-triggered animations (framer-motion)
+- Sticky transparent-to-solid navigation
+- Floating WhatsApp chat button
+- Corporate gifting section
+- Newsletter signup
+- Instagram social link (@giftsnmoreshopgh)
+- Currency in Ghanaian Cedis (GH₵)
 
 ## Key Commands
 
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- `pnpm --filter @workspace/api-server run dev` — run API server locally
-
-See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.

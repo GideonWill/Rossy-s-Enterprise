@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Gifts N More Shop"
+version = "1.0.0"
+id = "artifacts/gifts-n-more"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21497
+
+[services.development]
+run = "pnpm --filter @workspace/gifts-n-more run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gifts-n-more", "run", "build" ]
+publicDir = "artifacts/gifts-n-more/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21497"
+BASE_PATH = "/"
