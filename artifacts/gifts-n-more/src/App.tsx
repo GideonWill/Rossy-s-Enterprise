@@ -8,7 +8,6 @@ import {
   CategoriesPage,
   CheckoutPage,
   CollectionPage,
-  FeaturedPage,
   HomePage,
   ProductCartPage,
   type CartItem,
@@ -99,9 +98,7 @@ function Routes() {
       <Route path="/categories">
         <CategoriesPage {...sharedProps} />
       </Route>
-      <Route path="/featured">
-        <FeaturedPage {...sharedProps} />
-      </Route>
+
       <Route path="/collection">
         <CollectionPage {...sharedProps} />
       </Route>

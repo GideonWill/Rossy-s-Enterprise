@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { products, heroImage, categories } from "../data";
 import type { Product } from "../data";
 import corporateGiftsImage from "@assets/image_1776005308789.png";
@@ -142,6 +142,7 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [navSearch, setNavSearch] = useState("");
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -168,10 +169,9 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
           <img src={logoSrc} alt="ROSSY'S ENTERPRISE GIFTS & MORE" className={cn("w-auto object-contain transition-all", scrolled ? "h-10 md:h-12" : "h-14 md:h-20")} />
         </Link>
         <div className={cn("hidden items-center gap-6 text-sm font-medium uppercase tracking-wider md:flex lg:gap-8", scrolled ? "text-foreground" : "text-white")}>
-          <Link href="/categories" className="transition-colors hover:text-primary" data-testid="link-categories">Categories</Link>
-          <Link href="/featured" className="transition-colors hover:text-primary" data-testid="link-featured">Featured</Link>
-          <Link href="/collection" className="transition-colors hover:text-primary" data-testid="link-collection">Collection</Link>
-          <Link href="/sobolo" className="transition-colors hover:text-primary" data-testid="link-sobolo">Sobolo Making</Link>
+          <Link href="/categories" className={cn("transition-colors hover:text-primary py-1", location === "/categories" && "border-b-2 border-primary text-primary")} data-testid="link-categories">Categories</Link>
+          <Link href="/collection" className={cn("transition-colors hover:text-primary py-1", location === "/collection" && "border-b-2 border-primary text-primary")} data-testid="link-collection">Collection</Link>
+          <Link href="/sobolo" className={cn("transition-colors hover:text-primary py-1", location === "/sobolo" && "border-b-2 border-primary text-primary")} data-testid="link-sobolo">Sobolo Making</Link>
         </div>
         <div className={cn("flex items-center gap-3", scrolled ? "text-foreground" : "text-white")}>
           {searchOpen && (
@@ -251,23 +251,12 @@ export function HomePage(props: ShopProps) {
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 md:px-12">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-3xl text-white">
-            <motion.div variants={fadeUpVariant}>
-              <Badge className="mb-7 border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
-                A curated Ghanaian boutique
-              </Badge>
-            </motion.div>
             <motion.h1 variants={fadeUpVariant} className="mb-6 text-balance font-serif text-5xl leading-[1.02] md:text-7xl lg:text-8xl">
-              Merry Gifts Make Joyful Hearts
+              Curated Gifts, Packaging & More
             </motion.h1>
-            <motion.p variants={fadeUpVariant} className="mb-10 max-w-2xl text-balance text-lg font-light leading-relaxed text-white/90 md:text-xl">
-              Discover beautifully packaged, thoughtful gifts for every occasion. Hand-picked with love in Accra.
-            </motion.p>
-            <motion.div variants={fadeUpVariant} className="flex flex-col gap-4 sm:flex-row">
-              <Button size="lg" className="rounded-none bg-white px-8 py-6 text-base tracking-wide text-foreground transition-transform hover:scale-105 hover:bg-white/90" asChild>
-                <Link href="/collection" data-testid="link-shop-collection">Shop the Collection</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-none border-white/40 px-8 py-6 text-base tracking-wide text-white hover:bg-white/10" asChild>
-                <Link href="/categories" data-testid="link-view-categories">Explore Categories</Link>
+            <motion.div variants={fadeUpVariant} className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Button size="lg" className="rounded-none bg-primary px-8 py-6 text-base tracking-wide text-primary-foreground transition-transform hover:scale-105 hover:bg-primary/90" asChild>
+                <Link href="/collection" data-testid="link-shop-collection">Explore Collection</Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -302,16 +291,18 @@ export function HomePage(props: ShopProps) {
       </section>
 
       <section className="overflow-hidden border-t border-border/50 bg-card py-24 md:py-32">
-        <div className="container mx-auto mb-16 flex flex-col justify-between gap-8 px-6 md:flex-row md:items-end md:px-12">
+        <div className="container mx-auto mb-16 px-6 md:px-12">
           <div className="max-w-2xl">
             <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-primary">Curated Selection</h2>
             <h3 className="font-serif text-4xl md:text-5xl">Featured Gifts</h3>
           </div>
-          <Link href="/featured" className="group flex items-center gap-2 text-sm font-semibold uppercase tracking-wider transition-colors hover:text-primary" data-testid="link-view-featured">
-            View Featured <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
         </div>
         <ProductGrid products={featuredProducts} addToCart={props.addToCart} />
+        <div className="mt-16 text-center">
+          <Button variant="outline" className="rounded-none border-primary/20 bg-primary/5 px-10 py-6 text-sm font-bold uppercase tracking-widest text-primary transition-colors hover:bg-primary hover:text-primary-foreground" asChild>
+            <Link href="/collection">Explore All Gifts</Link>
+          </Button>
+        </div>
       </section>
 
       <CorporateBanner />
@@ -337,17 +328,7 @@ export function CategoriesPage(props: ShopProps) {
   );
 }
 
-export function FeaturedPage(props: ShopProps) {
-  const featuredProducts = products.filter((product) => product.isFeatured);
-  return (
-    <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <PageHero title="Featured Gifts" text="A polished selection of best-looking, ready-to-order gifts for quick decisions." image={products[2].image} />
-      <section className="py-20 md:py-28">
-        <ProductGrid products={featuredProducts} addToCart={props.addToCart} />
-      </section>
-    </Layout>
-  );
-}
+
 
 export function CollectionPage(props: ShopProps) {
   const filteredProducts = useMemo(() => getFilteredProducts(props.activeCategory, props.searchQuery, props.sortBy), [props.activeCategory, props.searchQuery, props.sortBy]);
@@ -772,7 +753,6 @@ function Footer() {
           <h4 className="mb-4 text-xs font-bold uppercase tracking-widest">Shop</h4>
           <div className="space-y-2 text-sm text-muted-foreground">
             <Link href="/categories" className="block hover:text-primary">Categories</Link>
-            <Link href="/featured" className="block hover:text-primary">Featured</Link>
             <Link href="/collection" className="block hover:text-primary">Collection</Link>
             <Link href="/sobolo" className="block hover:text-primary">Sobolo Making</Link>
           </div>

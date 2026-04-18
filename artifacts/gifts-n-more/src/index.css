@@ -106,13 +106,13 @@
   --popover-foreground: 0 5% 16%;
   --popover-border: 37 20% 87%;
 
-  /* Muted gold #C19A6B -> HSL 32 40% 58% */
-  --primary: 32 40% 58%;
+  /* Rossy Primary Magenta/Pink #D4145A -> HSL 338 83% 45% */
+  --primary: 338 83% 45%;
   --primary-foreground: 0 0% 100%;
 
-  /* Soft forest green #4A5D4E -> HSL 133 11% 33% */
-  --secondary: 133 11% 33%;
-  --secondary-foreground: 0 0% 100%;
+  /* Rossy Secondary Orange/Yellow #FBB03B -> HSL 36 95% 61% */
+  --secondary: 36 95% 61%;
+  --secondary-foreground: 0 5% 16%;
 
   --muted: 37 20% 87%;
   --muted-foreground: 0 5% 40%;
@@ -124,10 +124,10 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 37 20% 87%;
-  --ring: 32 40% 58%;
+  --ring: 338 83% 45%;
   
-  --chart-1: 32 40% 58%;
-  --chart-2: 133 11% 33%;
+  --chart-1: 338 83% 45%;
+  --chart-2: 36 95% 61%;
   --chart-3: 0 5% 16%;
   --chart-4: 37 20% 87%;
   --chart-5: 0 0% 100%;
@@ -185,10 +185,10 @@
   --popover: 0 5% 12%;
   --popover-foreground: 40 27% 96%;
   --popover-border: 0 5% 20%;
-  --primary: 32 40% 58%;
+  --primary: 338 83% 45%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 133 11% 33%;
-  --secondary-foreground: 0 0% 100%;
+  --secondary: 36 95% 61%;
+  --secondary-foreground: 0 5% 16%;
   --muted: 0 5% 20%;
   --muted-foreground: 40 27% 70%;
   --accent: 0 5% 20%;
@@ -196,9 +196,9 @@
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
   --input: 0 5% 20%;
-  --ring: 32 40% 58%;
-  --chart-1: 32 40% 58%;
-  --chart-2: 133 11% 33%;
+  --ring: 338 83% 45%;
+  --chart-1: 338 83% 45%;
+  --chart-2: 36 95% 61%;
   --chart-3: 40 27% 96%;
   --chart-4: 0 5% 20%;
   --chart-5: 0 5% 12%;

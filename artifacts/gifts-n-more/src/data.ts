@@ -49,20 +49,20 @@ export const categories = [
 export const products: Product[] = [
   {
     id: "p1",
-    name: "Performance Polo Shirt XL Size",
-    price: 350,
-    priceStr: "GH₵350.00",
-    image: "https://static.wixstatic.com/media/93ba99_b8f1843b7866470c83e7ac2c39dcde97~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_b8f1843b7866470c83e7ac2c39dcde97~mv2.jpeg",
+    name: "Premium Men's Watch & Accessories Box Set",
+    price: 950,
+    priceStr: "GH₵950.00",
+    image: "/him_1.png",
     isOutOfStock: false,
     category: "Gifts For Him",
     isFeatured: true
   },
   {
     id: "p2",
-    name: "Lexiart Polo Shirt Medium Size",
-    price: 350,
-    priceStr: "GH₵350.00",
-    image: "https://static.wixstatic.com/media/93ba99_15fca383db984c9cb470e933b5c7410b~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_15fca383db984c9cb470e933b5c7410b~mv2.jpeg",
+    name: "Classic Leather Gentlemen's Gift Box",
+    price: 850,
+    priceStr: "GH₵850.00",
+    image: "/him_2.png",
     isOutOfStock: false,
     category: "Father's Day/ Gifts For Dad",
     isFeatured: true
@@ -79,22 +79,22 @@ export const products: Product[] = [
   },
   {
     id: "p4",
-    name: "Cozy Adult Memory Foam Slippers",
-    price: 199,
-    priceStr: "GH₵199.00",
-    image: "https://static.wixstatic.com/media/93ba99_95e2c0333e2746c9ab727433f4d42267~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_95e2c0333e2746c9ab727433f4d42267~mv2.jpeg",
-    isOutOfStock: true,
-    category: "Gifts For Her",
+    name: "Luxury Gold Necklace & Earring Set",
+    price: 499,
+    priceStr: "GH₵499.00",
+    image: "/jewelry_1.jpg",
+    isOutOfStock: false,
+    category: "Jewelery",
     isFeatured: true
   },
   {
     id: "p5",
-    name: "Stitch Key Chain with 3 lip balm Set",
-    price: 110,
-    priceStr: "GH₵110.00",
-    image: "https://static.wixstatic.com/media/93ba99_a448a4d8f73e49de826542d13decdff5~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_a448a4d8f73e49de826542d13decdff5~mv2.jpeg",
+    name: "Golden Sun Pendant and Earring Combo",
+    price: 310,
+    priceStr: "GH₵310.00",
+    image: "/jewelry_2.png",
     isOutOfStock: false,
-    category: "Kids Gifts"
+    category: "Jewelery"
   },
   {
     id: "p6",
@@ -107,30 +107,30 @@ export const products: Product[] = [
   },
   {
     id: "p7",
-    name: "SHOWHOUSE NOIR & BLANC Scented Reed Diffuser",
-    price: 190,
-    priceStr: "GH₵190.00",
-    image: "https://static.wixstatic.com/media/93ba99_570d8d7fe68c4e3580c3b789b927c7fb~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_570d8d7fe68c4e3580c3b789b927c7fb~mv2.jpeg",
+    name: "Bold Geometric Gold Choker Set",
+    price: 520,
+    priceStr: "GH₵520.00",
+    image: "/jewelry_3.jpg",
     isOutOfStock: false,
-    category: "Other Gift Items"
+    category: "Jewelery"
   },
   {
     id: "p8",
-    name: "Blue Black Tommy Hilfiger Polo Shirt",
-    price: 580,
-    priceStr: "GH₵580.00",
-    image: "https://static.wixstatic.com/media/93ba99_3f53013057da4cb7b39882a509b76a64~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_3f53013057da4cb7b39882a509b76a64~mv2.jpeg",
+    name: "Luxury Sunglasses & Wallet Set",
+    price: 680,
+    priceStr: "GH₵680.00",
+    image: "/him_3.png",
     isOutOfStock: false,
     category: "Gifts For Him"
   },
   {
     id: "p9",
-    name: "Tommy Hilfiger Tote Bag",
-    price: 980,
-    priceStr: "GH₵980.00",
-    image: "https://static.wixstatic.com/media/93ba99_78890b5ffd7a420fb9ac1d78467cb803~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_78890b5ffd7a420fb9ac1d78467cb803~mv2.jpeg",
+    name: "Men's Premium Watch & Chain Box",
+    price: 1150,
+    priceStr: "GH₵1,150.00",
+    image: "/jewelry_4.png",
     isOutOfStock: false,
-    category: "Gifts For Her"
+    category: "Jewelery"
   },
   {
     id: "p10",
@@ -152,21 +152,21 @@ export const products: Product[] = [
   },
   {
     id: "p12",
-    name: "CZ clear stone gold Bracelet shipped in luxury gift box",
-    price: 250,
-    priceStr: "GH₵250.00",
-    image: "https://static.wixstatic.com/media/93ba99_51410a21a18d453db3d77bdde1abd3f2~mv2.jpg/v1/fill/w_401,h_401,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_51410a21a18d453db3d77bdde1abd3f2~mv2.jpg",
-    isOutOfStock: true,
+    name: "OLEVS Classic Blue & Gold Men's Watch",
+    price: 450,
+    priceStr: "GH₵450.00",
+    image: "/jewelry_5.jpg",
+    isOutOfStock: false,
     category: "Jewelery"
   },
   {
     id: "p13",
-    name: "Rihanna Reb’l Fleur Perfume, Scented Candle, Luxury goodies",
-    price: 2020,
-    priceStr: "GH₵2,020.00",
-    image: "https://static.wixstatic.com/media/93ba99_d1cfa1447dbc4e45bf142d715798baed~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_d1cfa1447dbc4e45bf142d715798baed~mv2.jpeg",
-    isOutOfStock: true,
-    category: "Perfume, Bath & Body For Her"
+    name: "Amore690 Grooming & Fragrance Box for Men",
+    price: 1200,
+    priceStr: "GH₵1,200.00",
+    image: "/him_4.png",
+    isOutOfStock: false,
+    category: "Gifts For Him"
   },
   {
     id: "p14",
@@ -188,12 +188,12 @@ export const products: Product[] = [
   },
   {
     id: "p16",
-    name: "Beautiful Unique tea cup set 2 cups 2 saucers",
-    price: 250,
-    priceStr: "GH₵250.00",
-    image: "https://static.wixstatic.com/media/93ba99_edaf1ab1feba49a09bcf57e412844813~mv2.jpeg/v1/fill/w_401,h_401,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_edaf1ab1feba49a09bcf57e412844813~mv2.jpeg",
+    name: "Sexy Man Parfum & Accessories Combo",
+    price: 750,
+    priceStr: "GH₵750.00",
+    image: "/him_5.jpg",
     isOutOfStock: false,
-    category: "Anniversary"
+    category: "Perfume, Bath & Body For Him"
   },
   {
     id: "p17",
@@ -230,5 +230,97 @@ export const products: Product[] = [
     image: "https://static.wixstatic.com/media/93ba99_2ff491b74b074765b46796f7ec214e88~mv2.jpeg/v1/fill/w_401,h_534,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_2ff491b74b074765b46796f7ec214e88~mv2.jpeg",
     isOutOfStock: true,
     category: "Gifts For Her"
+  },
+  {
+    id: "p21",
+    name: "Classic Red Rose Graduation Bouquet",
+    price: 350,
+    priceStr: "GH₵350.00",
+    image: "/grad_1.png",
+    isOutOfStock: false,
+    category: "Graduation / Congratulation Packages"
+  },
+  {
+    id: "p22",
+    name: "Elegant Black & Red Rose Graduation Special",
+    price: 450,
+    priceStr: "GH₵450.00",
+    image: "/grad_2.jpg",
+    isOutOfStock: false,
+    category: "Graduation / Congratulation Packages"
+  },
+  {
+    id: "p23",
+    name: "Heart-Shaped Bouquet with Grand Balloons & Teddy",
+    price: 1500,
+    priceStr: "GH₵1,500.00",
+    image: "/grad_3.jpg",
+    isOutOfStock: false,
+    category: "Graduation / Congratulation Packages"
+  },
+  {
+    id: "p24",
+    name: "Extravagant Grand Rose Bouquet & Luxury Gift",
+    price: 2500,
+    priceStr: "GH₵2,500.00",
+    image: "/grad_4.png",
+    isOutOfStock: false,
+    category: "Graduation / Congratulation Packages"
+  },
+  {
+    id: "p25",
+    name: "Luxury Raymond Watch & Perfume Congratulation Box",
+    price: 1150,
+    priceStr: "GH₵1,150.00",
+    image: "/grad_5.jpg",
+    isOutOfStock: false,
+    category: "Graduation / Congratulation Packages",
+    isFeatured: true
+  },
+  {
+    id: "p26",
+    name: "Luxury Ramadan Essentials Hamper",
+    price: 650,
+    priceStr: "GH₵650.00",
+    image: "/ramadan_1.jpg",
+    isOutOfStock: false,
+    category: "Ramadan Package Collection"
+  },
+  {
+    id: "p27",
+    name: "Premium Ramadan Snack & Nuts Basket",
+    price: 850,
+    priceStr: "GH₵850.00",
+    image: "/ramadan_2.jpg",
+    isOutOfStock: false,
+    category: "Ramadan Package Collection"
+  },
+  {
+    id: "p28",
+    name: "Fresh Fruits Iftar Basket with Watermelon",
+    price: 550,
+    priceStr: "GH₵550.00",
+    image: "/ramadan_3.jpg",
+    isOutOfStock: false,
+    category: "Ramadan Package Collection"
+  },
+  {
+    id: "p29",
+    name: "Grand Fruit & Snack Iftar Basket with Bananas",
+    price: 750,
+    priceStr: "GH₵750.00",
+    image: "/ramadan_4.jpg",
+    isOutOfStock: false,
+    category: "Ramadan Package Collection"
+  },
+  {
+    id: "p30",
+    name: "Classic Fresh Apples & Grapes Ramadan Treat",
+    price: 450,
+    priceStr: "GH₵450.00",
+    image: "/ramadan_5.jpg",
+    isOutOfStock: false,
+    category: "Ramadan Package Collection",
+    isFeatured: true
   }
 ];
