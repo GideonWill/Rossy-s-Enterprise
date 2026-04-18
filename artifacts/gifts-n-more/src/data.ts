@@ -284,7 +284,7 @@ export const products: Product[] = [
     priceStr: "GH₵650.00",
     image: "/ramadan_1.jpg",
     isOutOfStock: false,
-    category: "Ramadan Package Collection"
+    category: "Ramadan"
   },
   {
     id: "p27",
@@ -293,7 +293,7 @@ export const products: Product[] = [
     priceStr: "GH₵850.00",
     image: "/ramadan_2.jpg",
     isOutOfStock: false,
-    category: "Ramadan Package Collection"
+    category: "Ramadan"
   },
   {
     id: "p28",
@@ -302,7 +302,7 @@ export const products: Product[] = [
     priceStr: "GH₵550.00",
     image: "/ramadan_3.jpg",
     isOutOfStock: false,
-    category: "Ramadan Package Collection"
+    category: "Ramadan"
   },
   {
     id: "p29",
@@ -311,7 +311,7 @@ export const products: Product[] = [
     priceStr: "GH₵750.00",
     image: "/ramadan_4.jpg",
     isOutOfStock: false,
-    category: "Ramadan Package Collection"
+    category: "Ramadan"
   },
   {
     id: "p30",
@@ -320,7 +320,53 @@ export const products: Product[] = [
     priceStr: "GH₵450.00",
     image: "/ramadan_5.jpg",
     isOutOfStock: false,
-    category: "Ramadan Package Collection",
+    category: "Ramadan",
+    isFeatured: true
+  },
+  {
+    id: "p31",
+    name: "Love Custom Photo Box & Red Roses",
+    price: 950,
+    priceStr: "GH₵950.00",
+    image: "/val_1.png",
+    isOutOfStock: false,
+    category: "Valentine’s Day"
+  },
+  {
+    id: "p32",
+    name: "Heart Box with Teddy Bear & Jewelry",
+    price: 1150,
+    priceStr: "GH₵1,150.00",
+    image: "/val_2.jpg",
+    isOutOfStock: false,
+    category: "Valentine’s Day"
+  },
+  {
+    id: "p33",
+    name: "Romantic Heart Box with Teddy & Chocolates",
+    price: 850,
+    priceStr: "GH₵850.00",
+    image: "/val_3.png",
+    isOutOfStock: false,
+    category: "Valentine’s Day"
+  },
+  {
+    id: "p34",
+    name: "Grand Red Bear with Perfume & Roses",
+    price: 3200,
+    priceStr: "GH₵3,200.00",
+    image: "/val_4.jpg",
+    isOutOfStock: false,
+    category: "Valentine’s Day"
+  },
+  {
+    id: "p35",
+    name: "Men's Luxury Valentine Grooming & Rose Box",
+    price: 1550,
+    priceStr: "GH₵1,550.00",
+    image: "/val_5.png",
+    isOutOfStock: false,
+    category: "Valentine’s Day",
     isFeatured: true
   }
 ];
