@@ -15,6 +15,7 @@ import {
   type PaymentMethod,
   type SortOption,
 } from "@/pages/home";
+import SoboloPage from "@/pages/sobolo";
 import { products } from "@/data";
 import type { Product } from "@/data";
 
@@ -109,6 +110,9 @@ function Routes() {
       </Route>
       <Route path="/cart/:productId">
         {(params) => <ProductCartPage {...sharedProps} product={products.find((product) => product.id === params.productId)} />}
+      </Route>
+      <Route path="/sobolo">
+        <SoboloPage {...sharedProps} />
       </Route>
       <Route component={NotFound} />
     </Switch>

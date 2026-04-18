@@ -9,7 +9,7 @@ export interface Product {
   isFeatured?: boolean;
 }
 
-export const heroImage = "https://static.wixstatic.com/media/93ba99_0546803116844e9e938bdde5aefd823e~mv2.jpg/v1/fill/w_1905,h_631,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/93ba99_0546803116844e9e938bdde5aefd823e~mv2.jpg";
+export const heroImage = "/hero_banner.png"; // Placeholder, will be overriden in Home.tsx or used as fallback
 
 export const categories = [
   "Gifts For Her",

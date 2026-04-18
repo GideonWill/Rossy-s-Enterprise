@@ -4,6 +4,8 @@ import { Link } from "wouter";
 import { products, heroImage, categories } from "../data";
 import type { Product } from "../data";
 import corporateGiftsImage from "@assets/image_1776005308789.png";
+import heroBanner from "@assets/hero_banner.png";
+import logoSrc from "@assets/rossy logo.png";
 import {
   ArrowLeft,
   ArrowRight,
@@ -45,7 +47,7 @@ export type CartItem = {
   quantity: number;
 };
 
-type ShopProps = {
+export type ShopProps = {
   cartItems: CartItem[];
   cartCount: number;
   addToCart: (product: Product, quantity?: number) => void;
@@ -90,29 +92,7 @@ const spotlightCategories = [
   "Packaging Accessories",
 ];
 
-const heroSlides = [
-  {
-    title: "Customised Corporate Gifts",
-    text: "Premium branded sets, staff appreciation packages, client hampers, and event-ready gift experiences.",
-    label: "Corporate gifting now available",
-    image: corporateGiftsImage,
-    align: "left",
-  },
-  {
-    title: "Merry Gifts Make Joyful Hearts",
-    text: "Discover beautifully packaged, thoughtful gifts for every occasion. Hand-picked with love in Accra.",
-    label: "A curated Ghanaian boutique",
-    image: heroImage,
-    align: "center",
-  },
-  {
-    title: "Shop Beautiful Packages Fast",
-    text: "Find gifts for her, him, mum, dad, birthdays, anniversaries, graduations, and corporate moments.",
-    label: "Ready-to-delight collections",
-    image: products[2].image,
-    align: "right",
-  },
-];
+// Hero slides removed in favor of static hero
 
 const fadeUpVariant = {
   hidden: { opacity: 0, y: 30 },
@@ -158,7 +138,7 @@ function subtotalOf(cartItems: CartItem[]) {
   return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
 }
 
-function Layout({ children, cartCount, searchProducts }: { children: ReactNode; cartCount: number; searchProducts: (query: string) => void }) {
+export function Layout({ children, cartCount, searchProducts }: { children: ReactNode; cartCount: number; searchProducts: (query: string) => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [navSearch, setNavSearch] = useState("");
@@ -184,14 +164,14 @@ function Layout({ children, cartCount, searchProducts }: { children: ReactNode; 
           scrolled ? "bg-background/95 py-4 shadow-sm backdrop-blur-md" : "bg-black/15 py-6 backdrop-blur-[2px]",
         )}
       >
-        <Link href="/" className={cn("font-serif text-2xl font-semibold tracking-tight transition-colors", scrolled ? "text-foreground hover:text-primary" : "text-white hover:text-white/80")} data-testid="link-home">
-          Gifts N More
+        <Link href="/" className={cn("transition-opacity", scrolled ? "opacity-100" : "hover:opacity-80")} data-testid="link-home">
+          <img src={logoSrc} alt="ROSSY'S ENTERPRISE GIFTS & MORE" className={cn("w-auto object-contain transition-all", scrolled ? "h-10 md:h-12" : "h-14 md:h-20")} />
         </Link>
-        <div className={cn("hidden items-center gap-8 text-sm font-medium uppercase tracking-wider md:flex", scrolled ? "text-foreground" : "text-white")}>
+        <div className={cn("hidden items-center gap-6 text-sm font-medium uppercase tracking-wider md:flex lg:gap-8", scrolled ? "text-foreground" : "text-white")}>
           <Link href="/categories" className="transition-colors hover:text-primary" data-testid="link-categories">Categories</Link>
           <Link href="/featured" className="transition-colors hover:text-primary" data-testid="link-featured">Featured</Link>
           <Link href="/collection" className="transition-colors hover:text-primary" data-testid="link-collection">Collection</Link>
-          <Link href="/checkout" className="transition-colors hover:text-primary" data-testid="link-checkout">Checkout</Link>
+          <Link href="/sobolo" className="transition-colors hover:text-primary" data-testid="link-sobolo">Sobolo Making</Link>
         </div>
         <div className={cn("flex items-center gap-3", scrolled ? "text-foreground" : "text-white")}>
           {searchOpen && (
@@ -213,7 +193,7 @@ function Layout({ children, cartCount, searchProducts }: { children: ReactNode; 
           <button onClick={() => setSearchOpen((open) => !open)} className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/10 hover:text-primary" aria-label="Search products" data-testid="button-open-search">
             <Search className="h-5 w-5" />
           </button>
-          <a href="https://wa.link/s2jlfl" target="_blank" rel="noreferrer" className="hidden items-center gap-2 text-sm font-medium transition-colors hover:text-primary md:flex" data-testid="link-contact">
+          <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="hidden items-center gap-2 text-sm font-medium transition-colors hover:text-primary md:flex" data-testid="link-contact">
             <Phone className="h-4 w-4" />
             <span>Contact</span>
           </a>
@@ -250,7 +230,7 @@ function Layout({ children, cartCount, searchProducts }: { children: ReactNode; 
 
       {children}
       <Footer />
-      <a href="https://wa.link/s2jlfl" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl transition-transform hover:scale-110" aria-label="Chat on WhatsApp" data-testid="link-whatsapp-floating">
+      <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl transition-transform hover:scale-110" aria-label="Chat on WhatsApp" data-testid="link-whatsapp-floating">
         <Phone className="h-6 w-6" />
       </a>
     </div>
@@ -258,41 +238,29 @@ function Layout({ children, cartCount, searchProducts }: { children: ReactNode; 
 }
 
 export function HomePage(props: ShopProps) {
-  const [activeSlide, setActiveSlide] = useState(0);
   const featuredProducts = useMemo(() => products.filter((product) => product.isFeatured).slice(0, 4), []);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveSlide((slide) => (slide + 1) % heroSlides.length);
-    }, 5200);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const slide = heroSlides[activeSlide];
 
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <section className="relative flex min-h-[100dvh] w-full items-center overflow-hidden bg-foreground">
-        <AnimatePresence mode="wait">
-          <motion.div key={slide.title} initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.1, ease: "easeOut" }} className="absolute inset-0 h-full w-full">
-            <img src={slide.image} alt={slide.title} className={cn("h-full w-full object-cover", slide.align === "left" ? "object-center" : slide.align === "right" ? "object-right" : "object-center")} />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-black/10" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20" />
-          </motion.div>
-        </AnimatePresence>
+      <section className="relative flex min-h-[90dvh] w-full items-center overflow-hidden bg-foreground">
+        <div className="absolute inset-0 h-full w-full">
+          <img src={heroBanner} alt="Rossy's Enterprise Gifts" className="h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20" />
+        </div>
 
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-6 pt-28 md:px-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <motion.div key={`${slide.title}-copy`} initial="hidden" animate="visible" variants={staggerContainer} className="max-w-3xl text-white">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 md:px-12">
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-3xl text-white">
             <motion.div variants={fadeUpVariant}>
               <Badge className="mb-7 border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
-                {slide.label}
+                A curated Ghanaian boutique
               </Badge>
             </motion.div>
             <motion.h1 variants={fadeUpVariant} className="mb-6 text-balance font-serif text-5xl leading-[1.02] md:text-7xl lg:text-8xl">
-              {slide.title}
+              Merry Gifts Make Joyful Hearts
             </motion.h1>
             <motion.p variants={fadeUpVariant} className="mb-10 max-w-2xl text-balance text-lg font-light leading-relaxed text-white/90 md:text-xl">
-              {slide.text}
+              Discover beautifully packaged, thoughtful gifts for every occasion. Hand-picked with love in Accra.
             </motion.p>
             <motion.div variants={fadeUpVariant} className="flex flex-col gap-4 sm:flex-row">
               <Button size="lg" className="rounded-none bg-white px-8 py-6 text-base tracking-wide text-foreground transition-transform hover:scale-105 hover:bg-white/90" asChild>
@@ -303,24 +271,6 @@ export function HomePage(props: ShopProps) {
               </Button>
             </motion.div>
           </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.9 }} className="hidden justify-self-end border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-md lg:block">
-            <div className="bg-background p-5 text-foreground">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-primary">Today’s gift pick</p>
-              <img src={featuredProducts[0].image} alt={featuredProducts[0].name} className="mb-5 aspect-square w-72 object-cover" />
-              <h3 className="font-serif text-2xl">{featuredProducts[0].name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{featuredProducts[0].priceStr}</p>
-              <Button className="mt-5 w-full rounded-none" asChild>
-                <Link href={`/cart/${featuredProducts[0].id}`}>Add to cart page</Link>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3">
-          {heroSlides.map((item, index) => (
-            <button key={item.title} onClick={() => setActiveSlide(index)} className={cn("h-1.5 rounded-full transition-all", activeSlide === index ? "w-12 bg-white" : "w-5 bg-white/35")} aria-label={`Show ${item.title}`} />
-          ))}
         </div>
       </section>
 
@@ -666,7 +616,7 @@ function PageHero({ title, text, image }: { title: string; text: string; image: 
       <div className="absolute inset-0 bg-black/55" />
       <div className="absolute inset-0 bg-gradient-to-t from-background via-black/20 to-transparent" />
       <div className="container relative z-10 mx-auto px-6 md:px-12">
-        <Badge className="mb-6 rounded-none bg-primary text-primary-foreground">Gifts N More Shop</Badge>
+        <Badge className="mb-6 rounded-none bg-primary px-3 py-1.5 font-semibold tracking-wider text-primary-foreground">ROSSY'S ENTERPRISE GIFTS & MORE</Badge>
         <h1 className="max-w-4xl font-serif text-5xl leading-tight md:text-7xl">{title}</h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">{text}</p>
       </div>
@@ -773,7 +723,7 @@ function CorporateBanner() {
           Looking for customized hampers or bulk orders for weddings, anniversaries, graduations, or corporate events? We create tailored gifting experiences.
         </p>
         <Button size="lg" className="mt-4 rounded-none bg-white px-8 py-6 text-base font-semibold text-primary hover:bg-white/90" asChild>
-          <a href="https://wa.link/s2jlfl" target="_blank" rel="noreferrer" data-testid="link-gifting-expert">Chat with a Gifting Expert</a>
+          <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" data-testid="link-gifting-expert">Chat with a Gifting Expert</a>
         </Button>
       </motion.div>
     </section>
@@ -815,7 +765,7 @@ function Footer() {
     <footer className="border-t border-border bg-card py-16">
       <div className="container mx-auto grid grid-cols-1 gap-10 px-6 md:grid-cols-4 md:px-12">
         <div className="md:col-span-2">
-          <h3 className="mb-4 font-serif text-3xl">Gifts N More</h3>
+          <img src={logoSrc} alt="ROSSY'S ENTERPRISE GIFTS & MORE" className="mb-6 h-12 w-auto object-contain opacity-90 grayscale hover:grayscale-0 transition-all" />
           <p className="max-w-md text-muted-foreground">Premium Ghanaian gifting boutique for personal moments, corporate gifting, packaging, cards, hampers, and special occasions.</p>
         </div>
         <div>
@@ -824,14 +774,16 @@ function Footer() {
             <Link href="/categories" className="block hover:text-primary">Categories</Link>
             <Link href="/featured" className="block hover:text-primary">Featured</Link>
             <Link href="/collection" className="block hover:text-primary">Collection</Link>
-            <Link href="/checkout" className="block hover:text-primary">Checkout</Link>
+            <Link href="/sobolo" className="block hover:text-primary">Sobolo Making</Link>
           </div>
         </div>
         <div>
           <h4 className="mb-4 text-xs font-bold uppercase tracking-widest">Connect</h4>
           <div className="space-y-3 text-sm text-muted-foreground">
-            <a href="https://wa.link/s2jlfl" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Phone className="h-4 w-4" /> WhatsApp</a>
-            <a href="https://www.instagram.com/giftsnmoreshopgh" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Instagram className="h-4 w-4" /> @giftsnmoreshopgh</a>
+            <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Phone className="h-4 w-4" /> +233 55 819 8832</a>
+            <a href="https://tiktok.com/@rossys.enterprise" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rossys.enterprise</a>
+            <a href="https://snapchat.com/add/rosemondadjet21" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rosemondadjet21</a>
+            <a href="https://instagram.com/Roxy_luv" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Instagram className="h-4 w-4" /> Roxy_luv</a>
           </div>
         </div>
       </div>
