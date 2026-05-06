@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import { products, heroImage, categories } from "../data";
 import type { Product } from "../data";
 import corporateGiftsImage from "@assets/image_1776005308789.png";
-import heroBanner from "@assets/hero_banner.png";
+import heroBanner from "@assets/rossy hero section.jpeg";
 import logoSrc from "@assets/rossy logo.png";
 import {
   ArrowLeft,
@@ -245,15 +245,15 @@ export function HomePage(props: ShopProps) {
       <section className="relative flex min-h-[90dvh] w-full items-center overflow-hidden bg-foreground">
         <div className="absolute inset-0 h-full w-full">
           <img src={heroBanner} alt="Rossy's Enterprise Gifts" className="h-full w-full object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-black/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20" />
         </div>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 md:px-12">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="max-w-3xl text-white">
-            <motion.h1 variants={fadeUpVariant} className="mb-6 text-balance font-serif text-5xl leading-[1.02] md:text-7xl lg:text-8xl">
-              Curated Gifts, Packaging & More
-            </motion.h1>
+            <motion.div variants={fadeUpVariant} className="inline-block bg-black/20 backdrop-blur-md px-6 py-4 border border-white/10 shadow-2xl">
+              <motion.h1 className="text-balance font-serif text-xl md:text-2xl leading-relaxed tracking-wider uppercase text-white">
+                Curated Gifts, Packaging & More
+              </motion.h1>
+            </motion.div>
             <motion.div variants={fadeUpVariant} className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Button size="lg" className="rounded-none bg-primary px-8 py-6 text-base tracking-wide text-primary-foreground transition-transform hover:scale-105 hover:bg-primary/90" asChild>
                 <Link href="/collection" data-testid="link-shop-collection">Explore Collection</Link>
