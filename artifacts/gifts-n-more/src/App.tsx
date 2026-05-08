@@ -151,23 +151,12 @@ function Main() {
     queryFn: fetchProducts,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <p className="text-muted-foreground animate-pulse">Loading products...</p>
-      </div>
-    );
+  if (error) {
+    console.error("Failed to load products", error);
   }
 
-  if (error || !products) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <p className="text-destructive font-semibold">Failed to load products.</p>
-      </div>
-    );
-  }
-
-  return <Routes products={products} />;
+  // Pass empty array while loading so the UI renders immediately
+  return <Routes products={products || []} />;
 }
 
 function App() {

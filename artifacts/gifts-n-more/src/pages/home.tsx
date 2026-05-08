@@ -565,6 +565,12 @@ export function CheckoutPage(props: ShopProps) {
         params.append("custom_fields[1][variable_name]", "express_delivery");
         params.append("custom_fields[1][value]", expressText);
         
+        // Paystack accepts the amount in the lowest currency unit (pesewas/kobo).
+        // Passing the amount via URL automatically makes the field read-only on the payment page.
+        const amountInPesewas = Math.round(estimatedTotal * 100);
+        params.append("amount", amountInPesewas.toString());
+        params.append("readonly", "true");
+        
         window.location.href = `${paystackUrl}?${params.toString()}`;
         return;
       }
