@@ -1,6 +1,6 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
@@ -15,12 +15,19 @@ import {
   type SortOption,
 } from "@/pages/home";
 import SoboloPage from "@/pages/sobolo";
-import { products } from "@/data";
+import { LoginPage, RegisterPage } from "@/pages/auth";
+import { AdminDashboard } from "@/pages/admin/dashboard";
+import { AdminInventory } from "@/pages/admin/inventory";
+import { AdminOrders } from "@/pages/admin/orders";
+import { AdminUsers } from "@/pages/admin/users";
+import { AdminSettings } from "@/pages/admin/settings";
 import type { Product } from "@/data";
+import { fetchProducts } from "@/api";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
-function Routes() {
+function Routes({ products }: { products: Product[] }) {
   const [, setLocation] = useLocation();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -88,6 +95,7 @@ function Routes() {
     setCheckoutNotice,
     shopCategory,
     searchProducts,
+    products,
   };
 
   return (
@@ -111,20 +119,68 @@ function Routes() {
       <Route path="/sobolo">
         <SoboloPage {...sharedProps} />
       </Route>
+      <Route path="/login">
+        <LoginPage />
+      </Route>
+      <Route path="/register">
+        <RegisterPage />
+      </Route>
+      <Route path="/admin">
+        <AdminDashboard />
+      </Route>
+      <Route path="/admin/inventory">
+        <AdminInventory />
+      </Route>
+      <Route path="/admin/orders">
+        <AdminOrders />
+      </Route>
+      <Route path="/admin/users">
+        <AdminUsers />
+      </Route>
+      <Route path="/admin/settings">
+        <AdminSettings />
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );
 }
 
+function Main() {
+  const { data: products, isLoading, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-muted-foreground animate-pulse">Loading products...</p>
+      </div>
+    );
+  }
+
+  if (error || !products) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-destructive font-semibold">Failed to load products.</p>
+      </div>
+    );
+  }
+
+  return <Routes products={products} />;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Routes />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Main />
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

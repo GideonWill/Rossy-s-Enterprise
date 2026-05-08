@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
-import { products, heroImage, categories } from "../data";
+import { heroImage, categories } from "../data";
 import type { Product } from "../data";
+import { createOrder } from "../api";
 import corporateGiftsImage from "@assets/image_1776005308789.png";
 import heroBanner from "@assets/rossy hero section.jpeg";
 import logoSrc from "@assets/rossy logo.png";
@@ -13,7 +14,7 @@ import {
   CreditCard,
   Gift,
   Heart,
-  Instagram,
+  Mail,
   MapPin,
   Minus,
   PackageCheck,
@@ -31,6 +32,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
+import { Chatbot } from "../components/Chatbot";
+
 
 export type SortOption =
   | "Recommended"
@@ -66,6 +69,7 @@ export type ShopProps = {
   setCheckoutNotice: (notice: string) => void;
   shopCategory: (category: string) => void;
   searchProducts: (query: string) => void;
+  products: Product[];
 };
 
 type ProductCartPageProps = ShopProps & {
@@ -111,7 +115,7 @@ const staggerContainer = {
 
 const formatCurrency = (amount: number) => `GH₵${amount.toLocaleString("en-GH", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-function getFilteredProducts(activeCategory: string, searchQuery: string, sortBy: SortOption) {
+function getFilteredProducts(products: Product[], activeCategory: string, searchQuery: string, sortBy: SortOption) {
   const normalizedSearch = searchQuery.trim().toLowerCase();
   const filtered = products.filter((product) => {
     const matchesCategory = activeCategory === "All" || product.category === activeCategory;
@@ -230,15 +234,13 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
 
       {children}
       <Footer />
-      <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl transition-transform hover:scale-110" aria-label="Chat on WhatsApp" data-testid="link-whatsapp-floating">
-        <Phone className="h-6 w-6" />
-      </a>
+      <Chatbot />
     </div>
   );
 }
 
 export function HomePage(props: ShopProps) {
-  const featuredProducts = useMemo(() => products.filter((product) => product.isFeatured).slice(0, 4), []);
+  const featuredProducts = useMemo(() => props.products.filter((product) => product.isFeatured).slice(0, 4), [props.products]);
 
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
@@ -278,7 +280,7 @@ export function HomePage(props: ShopProps) {
           <SectionHeader eyebrow="Discover" title="Shop by Occasion" text="Every category now opens into its own shopping flow instead of hiding inside one long page." />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
             {spotlightCategories.map((category, index) => {
-              const product = products.find((item) => item.category === category) ?? products[index % products.length];
+              const product = props.products.find((item) => item.category === category) ?? props.products[index % props.products.length];
               return <CategoryTile key={category} category={category} product={product} onClick={() => props.shopCategory(category)} index={index} />;
             })}
           </div>
@@ -313,12 +315,12 @@ export function HomePage(props: ShopProps) {
 export function CategoriesPage(props: ShopProps) {
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <PageHero title="Gift Categories" text="Browse by occasion, recipient, gift type, packaging, cards, and celebration moments." image={products[10].image} />
+      <PageHero title="Gift Categories" text="Browse by occasion, recipient, gift type, packaging, cards, and celebration moments." image={props.products[10]?.image || heroImage} />
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category, index) => {
-              const product = products.find((item) => item.category === category) ?? products[index % products.length];
+              const product = props.products.find((item) => item.category === category) ?? props.products[index % props.products.length];
               return <CategoryTile key={category} category={category} product={product} onClick={() => props.shopCategory(category)} index={index} compact />;
             })}
           </div>
@@ -331,11 +333,11 @@ export function CategoriesPage(props: ShopProps) {
 
 
 export function CollectionPage(props: ShopProps) {
-  const filteredProducts = useMemo(() => getFilteredProducts(props.activeCategory, props.searchQuery, props.sortBy), [props.activeCategory, props.searchQuery, props.sortBy]);
+  const filteredProducts = useMemo(() => getFilteredProducts(props.products, props.activeCategory, props.searchQuery, props.sortBy), [props.products, props.activeCategory, props.searchQuery, props.sortBy]);
 
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <PageHero title="Shop Collection" text="Search, sort, filter, and open any item to its own professional cart page." image={products[8].image} />
+      <PageHero title="Shop Collection" text="Search, sort, filter, and open any item to its own professional cart page." image={props.products[8]?.image || heroImage} />
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-6 md:px-12">
           <div className="mb-8 grid gap-4 border border-border bg-card p-4 shadow-sm md:grid-cols-[1fr_260px] md:p-5">
@@ -414,7 +416,7 @@ export function ProductCartPage(props: ProductCartPageProps) {
 
   const product = props.product;
   const existing = props.cartItems.find((item) => item.product.id === product.id);
-  const related = products.filter((item) => item.category === product.category && item.id !== product.id).slice(0, 4);
+  const related = props.products.filter((item) => item.category === product.category && item.id !== product.id).slice(0, 4);
 
   const handleAdd = () => {
     props.addToCart(product, quantity);
@@ -481,25 +483,109 @@ export function ProductCartPage(props: ProductCartPageProps) {
 }
 
 export function CheckoutPage(props: ShopProps) {
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [orderNotes, setOrderNotes] = useState("");
+  const [dateNeeded, setDateNeeded] = useState("");
+
   const subtotal = subtotalOf(props.cartItems);
   const serviceFee = props.cartItems.length > 0 && props.paymentMethod === "paystack" ? Math.round(subtotal * 0.015) : 0;
   const estimatedTotal = subtotal + serviceFee;
 
-  const handleCheckoutAction = () => {
+  const isExpressDelivery = () => {
+    if (!dateNeeded) return false;
+    const selected = new Date(dateNeeded);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diffTime = selected.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    return diffDays < 3;
+  };
+
+  const express = isExpressDelivery();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleCheckoutAction = async () => {
     if (props.cartItems.length === 0) {
       props.setCheckoutNotice("Add at least one available product before checkout.");
       return;
     }
-    if (props.paymentMethod === "paystack") {
-      props.setCheckoutNotice("Paystack checkout option is ready for connection. Add Paystack keys next to process real online payments.");
+    
+    if (!dateNeeded) {
+      props.setCheckoutNotice("Please select the date you need the items.");
       return;
     }
-    props.setCheckoutNotice("Pickup order prepared. Customer can pay when they arrive at the pickup location.");
+
+    setIsSubmitting(true);
+    props.setCheckoutNotice("Saving your order...");
+
+    try {
+      // 1. Save order to DB first
+      const orderData = {
+        totalAmount: estimatedTotal,
+        paymentMethod: props.paymentMethod,
+        dateNeeded,
+        isExpress: express,
+        customerName: fullName,
+        customerPhone: phoneNumber,
+        customerEmail: email,
+        orderNotes,
+        items: props.cartItems.map(item => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          priceAtTime: item.product.price
+        }))
+      };
+
+      await createOrder(orderData);
+      
+      // 2. Clear cart
+      props.clearCart();
+
+      // 3. Redirect to payment/whatsapp
+      if (props.paymentMethod === "paystack") {
+        const expressText = express ? "YES" : "NO";
+        let paystackUrl = "https://paystack.shop/pay/xwalvml4p0";
+        
+        const params = new URLSearchParams();
+        if (email) params.append("email", email);
+        if (fullName) {
+          const parts = fullName.split(" ");
+          params.append("first_name", parts[0]);
+          if (parts.length > 1) params.append("last_name", parts.slice(1).join(" "));
+        }
+        if (phoneNumber) params.append("phone", phoneNumber);
+        
+        params.append("custom_fields[0][display_name]", "Date Needed");
+        params.append("custom_fields[0][variable_name]", "date_needed");
+        params.append("custom_fields[0][value]", dateNeeded);
+        params.append("custom_fields[1][display_name]", "Express Delivery");
+        params.append("custom_fields[1][variable_name]", "express_delivery");
+        params.append("custom_fields[1][value]", expressText);
+        
+        window.location.href = `${paystackUrl}?${params.toString()}`;
+        return;
+      }
+
+      const itemsText = props.cartItems.map(item => `${item.quantity}x ${item.product.name}`).join("\n");
+      const message = `Hello Rossy's Enterprise,\n\nI want to make a pickup order.\n\n*Name:* ${fullName || 'N/A'}\n*Phone:* ${phoneNumber || 'N/A'}\n*Email:* ${email || 'N/A'}\n*Date Needed:* ${dateNeeded}\n*Express Delivery:* ${express ? 'YES' : 'NO'}\n\n*Items:*\n${itemsText}\n\n*Total:* ${formatCurrency(estimatedTotal)}\n\n*Notes:* ${orderNotes || 'None'}`;
+      
+      const whatsappUrl = `https://wa.me/233277811521?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      props.setCheckoutNotice("Order saved! Opening WhatsApp to complete your pickup order...");
+    } catch (error) {
+      console.error(error);
+      props.setCheckoutNotice("There was an error saving your order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <PageHero title="Cart & Checkout" text="Review selected products, update quantities, and choose Paystack online payment or pickup payment." image={products[16].image} />
+      <PageHero title="Cart & Checkout" text="Review selected products, update quantities, and choose Paystack online payment or pickup payment." image={props.products[16]?.image || heroImage} />
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_0.85fr]">
@@ -552,12 +638,26 @@ export function CheckoutPage(props: ShopProps) {
               <div className="border border-border bg-card p-5 shadow-sm md:p-8">
                 <h2 className="mb-6 font-serif text-3xl">Order Details</h2>
                 <div className="grid gap-4">
-                  <CheckoutInput label="Full name" placeholder="Your name" />
-                  <CheckoutInput label="Phone number" placeholder="+233..." />
-                  <CheckoutInput label="Email" placeholder="you@example.com" />
+                  <CheckoutInput label="Full name" placeholder="Your name" value={fullName} onChange={setFullName} />
+                  <CheckoutInput label="Phone number" placeholder="024..." value={phoneNumber} onChange={setPhoneNumber} />
+                  <CheckoutInput label="Email" placeholder="you@example.com" value={email} onChange={setEmail} />
+                  <div className="space-y-2">
+                    <CheckoutInput label="Date Needed" placeholder="Select date" type="date" value={dateNeeded} onChange={setDateNeeded} />
+                    {dateNeeded && express && (
+                      <p className="text-sm font-semibold text-destructive flex items-center gap-1">
+                        ⚠️ Express delivery (less than 3 days notice)
+                      </p>
+                    )}
+                  </div>
                   <label className="block">
                     <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">Order notes</span>
-                    <textarea className="min-h-24 w-full border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary" placeholder="Delivery details, preferred wrapping, message card..." data-testid="textarea-order-notes" />
+                    <textarea 
+                      className="min-h-24 w-full border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary" 
+                      placeholder="Delivery details, preferred wrapping, message card..." 
+                      data-testid="textarea-order-notes"
+                      value={orderNotes}
+                      onChange={(e) => setOrderNotes(e.target.value)}
+                    />
                   </label>
                 </div>
               </div>
@@ -577,8 +677,8 @@ export function CheckoutPage(props: ShopProps) {
                 <SummaryLine label="Estimated service fee" value={formatCurrency(serviceFee)} />
                 <div className="my-5 border-t border-background/20" />
                 <SummaryLine label="Estimated total" value={formatCurrency(estimatedTotal)} strong />
-                <Button onClick={handleCheckoutAction} className="mt-6 w-full rounded-none bg-primary py-6 text-base text-primary-foreground hover:bg-primary/90" data-testid="button-confirm-checkout">
-                  {props.paymentMethod === "paystack" ? "Continue to Paystack" : "Confirm Pickup Order"}
+                <Button disabled={isSubmitting} onClick={handleCheckoutAction} className="mt-6 w-full rounded-none bg-primary py-6 text-base text-primary-foreground hover:bg-primary/90" data-testid="button-confirm-checkout">
+                  {isSubmitting ? "Processing..." : (props.paymentMethod === "paystack" ? "Pay" : "Confirm Pickup Date")}
                 </Button>
                 {props.checkoutNotice && <p className="mt-4 border border-background/15 bg-background/10 p-3 text-sm text-background/90" data-testid="text-checkout-notice">{props.checkoutNotice}</p>}
               </div>
@@ -723,11 +823,18 @@ function PaymentOption({ active, icon, title, text, onClick }: { active: boolean
   );
 }
 
-function CheckoutInput({ label, placeholder }: { label: string; placeholder: string }) {
+function CheckoutInput({ label, placeholder, value, onChange, type = "text" }: { label: string; placeholder: string; value?: string; onChange?: (val: string) => void; type?: string }) {
   return (
     <label className="block">
       <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">{label}</span>
-      <input className="w-full border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary" placeholder={placeholder} data-testid={`input-${label.toLowerCase().replace(/\s+/g, "-")}`} />
+      <input 
+        type={type}
+        value={value}
+        onChange={(e) => onChange && onChange(e.target.value)}
+        className="w-full border border-border bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-primary" 
+        placeholder={placeholder} 
+        data-testid={`input-${label.toLowerCase().replace(/\s+/g, "-")}`} 
+      />
     </label>
   );
 }
@@ -763,7 +870,7 @@ function Footer() {
             <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Phone className="h-4 w-4" /> +233 55 819 8832</a>
             <a href="https://tiktok.com/@rossys.enterprise" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rossys.enterprise</a>
             <a href="https://snapchat.com/add/rosemondadjet21" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rosemondadjet21</a>
-            <a href="https://instagram.com/Roxy_luv" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Instagram className="h-4 w-4" /> Roxy_luv</a>
+            <a href="mailto:okangrosemond490@gmail.com" className="flex items-center gap-2 hover:text-primary"><Mail className="h-4 w-4" /> okangrosemond490@gmail.com</a>
           </div>
         </div>
       </div>
