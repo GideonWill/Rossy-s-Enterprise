@@ -1,9 +1,9 @@
 {
   "version": 2,
   "buildCommand": "pnpm install --ignore-scripts && pnpm --filter \"./artifacts/gifts-n-more\" run build",
-  "outputDirectory": "artifacts/gifts-n-more/dist/public",
+  "outputDirectory": "artifacts/gifts-n-more/dist",
   "installCommand": "pnpm install --ignore-scripts",
-  "framework": null,
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/api/(.*)",
