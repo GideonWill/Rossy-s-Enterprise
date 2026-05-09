@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Loader2, Shield, ShieldAlert, User as UserIcon, Calendar, Mail, MoreHorizontal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type User = {
   id: number;
@@ -153,6 +154,4 @@ export function AdminUsers() {
   );
 }
 
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
+

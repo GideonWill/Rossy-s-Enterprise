@@ -4,6 +4,7 @@ import { API_BASE_URL } from "@/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { Package, ShoppingCart, Users, TrendingUp, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export function AdminDashboard() {
   const { token } = useAuth();
@@ -190,6 +191,4 @@ export function AdminDashboard() {
   );
 }
 
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
+

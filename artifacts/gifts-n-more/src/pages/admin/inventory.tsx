@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2, Loader2, X, Image as ImageIcon, Tag, Hash, Star, LayoutGrid } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type Product = {
   id: string;
@@ -296,6 +297,4 @@ export function AdminInventory() {
   );
 }
 
-function cn(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
+
