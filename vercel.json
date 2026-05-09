@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "pnpm install --ignore-scripts && pnpm --filter \"./artifacts/gifts-n-more\" run build",
-  "outputDirectory": "artifacts/gifts-n-more/dist",
+  "buildCommand": "pnpm install --ignore-scripts && pnpm --filter \"./artifacts/gifts-n-more\" run build && rm -rf dist && mv artifacts/gifts-n-more/dist dist",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install --ignore-scripts",
   "framework": "vite",
   "routes": [
