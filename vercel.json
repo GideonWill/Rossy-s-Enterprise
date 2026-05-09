@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm install --ignore-scripts && pnpm --filter \"./artifacts/gifts-n-more\" run build && cp -R artifacts/gifts-n-more/dist public",
+  "buildCommand": "pnpm install --ignore-scripts && pnpm --filter \"./artifacts/gifts-n-more\" run build && rm -rf public && mv artifacts/gifts-n-more/dist public",
   "outputDirectory": "public",
   "installCommand": "pnpm install --ignore-scripts",
   "framework": "vite",
@@ -12,7 +12,7 @@
         "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS,PATCH",
         "Access-Control-Allow-Headers": "Content-Type,Authorization"
       },
-      "dest": "/api/index.ts"
+      "dest": "/api/index"
     },
     { "handle": "filesystem" },
     {
