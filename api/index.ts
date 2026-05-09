@@ -340,6 +340,44 @@ app.put("/api/orders/:id/status", requireAdmin, async (req: any, res) => {
       }).catch((err) => console.error("Email send failed:", err));
     }
 
+    // Send SMS notification to customer if they provided a phone number
+    if (order.customerPhone && process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+      const smsMessages: Record<string, string> = {
+        "Pending": "Your order has been received and is awaiting processing.",
+        "Processing": "Your order is now being prepared!",
+        "Completed": "Your order is ready! Thank you for choosing Rossy's Enterprise.",
+        "Cancelled": "Your order has been cancelled. Contact us on WhatsApp if you have questions.",
+      };
+
+      // Format Ghana phone number: 0XX... → +233XX...
+      let phone = order.customerPhone.replace(/\s+/g, "");
+      if (phone.startsWith("0")) {
+        phone = "+233" + phone.slice(1);
+      } else if (!phone.startsWith("+")) {
+        phone = "+233" + phone;
+      }
+
+      const smsBody = `Rossy's Enterprise — Order #${order.id}\nStatus: ${status}\n${smsMessages[status] || "Your order status has been updated."}\nAmount: GH₵${order.totalAmount?.toLocaleString("en-GH", { minimumFractionDigits: 2 })}\nDate Needed: ${order.dateNeeded}\nQuestions? WhatsApp: +233558198832`;
+
+      const twilioSid = process.env.TWILIO_ACCOUNT_SID;
+      const twilioToken = process.env.TWILIO_AUTH_TOKEN;
+      const twilioFrom = process.env.TWILIO_PHONE_NUMBER || "";
+
+      // Fire-and-forget SMS
+      fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: "Basic " + Buffer.from(`${twilioSid}:${twilioToken}`).toString("base64"),
+        },
+        body: new URLSearchParams({
+          To: phone,
+          From: twilioFrom,
+          Body: smsBody,
+        }).toString(),
+      }).catch((err) => console.error("SMS send failed:", err));
+    }
+
     res.json(order);
   } catch {
     res.status(500).json({ error: "Internal server error" });
