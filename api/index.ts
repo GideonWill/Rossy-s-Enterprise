@@ -278,6 +278,68 @@ app.put("/api/orders/:id/status", requireAdmin, async (req: any, res) => {
     const [order] = await getDb().update(ordersTable).set({ status })
       .where(eq(ordersTable.id, parseInt(req.params.id))).returning();
     if (!order) return res.status(404).json({ error: "Order not found" });
+
+    // Send email notification to customer if they provided an email
+    if (order.customerEmail && process.env.RESEND_API_KEY) {
+      const statusMessages: Record<string, string> = {
+        "Pending": "Your order has been received and is awaiting processing.",
+        "Processing": "Great news! Your order is now being prepared. We'll have it ready for you soon.",
+        "Completed": "Your order is ready! Thank you for shopping with Rossy's Enterprise.",
+        "Cancelled": "Your order has been cancelled. If you have any questions, please contact us on WhatsApp.",
+      };
+
+      const statusColors: Record<string, string> = {
+        "Pending": "#f59e0b",
+        "Processing": "#3b82f6",
+        "Completed": "#22c55e",
+        "Cancelled": "#ef4444",
+      };
+
+      const emailHtml = `
+        <div style="font-family: 'Georgia', serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
+          <div style="background: #1a1a1a; padding: 32px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px;">ROSSY'S ENTERPRISE</h1>
+            <p style="color: #999; margin: 8px 0 0; font-size: 12px; letter-spacing: 3px;">GIFTS & MORE</p>
+          </div>
+          <div style="padding: 40px 32px;">
+            <h2 style="margin: 0 0 8px; color: #1a1a1a; font-size: 22px;">Order Status Update</h2>
+            <p style="color: #666; margin: 0 0 24px; font-size: 14px;">Hi ${order.customerName || "Valued Customer"},</p>
+            <div style="background: #f9f9f9; border-left: 4px solid ${statusColors[status] || "#666"}; padding: 20px; margin-bottom: 24px;">
+              <p style="margin: 0 0 8px; font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 2px;">New Status</p>
+              <p style="margin: 0; font-size: 20px; font-weight: bold; color: ${statusColors[status] || "#666"};">${status}</p>
+            </div>
+            <p style="color: #444; line-height: 1.6; margin-bottom: 24px;">${statusMessages[status] || "Your order status has been updated."}</p>
+            <div style="background: #f9f9f9; padding: 20px; margin-bottom: 24px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; color: #999; text-transform: uppercase; letter-spacing: 2px;">Order Details</h3>
+              <p style="margin: 4px 0; color: #333;"><strong>Order #:</strong> ${order.id}</p>
+              <p style="margin: 4px 0; color: #333;"><strong>Amount:</strong> GH₵${order.totalAmount?.toLocaleString("en-GH", { minimumFractionDigits: 2 })}</p>
+              <p style="margin: 4px 0; color: #333;"><strong>Date Needed:</strong> ${order.dateNeeded}</p>
+              <p style="margin: 4px 0; color: #333;"><strong>Payment:</strong> ${order.paymentMethod === "paystack" ? "Online" : "Pickup"}</p>
+            </div>
+            <p style="color: #999; font-size: 13px; line-height: 1.5;">Questions? Reach us on WhatsApp: <a href="https://wa.me/233558198832" style="color: #b8860b;">+233 55 819 8832</a></p>
+          </div>
+          <div style="background: #1a1a1a; padding: 20px; text-align: center;">
+            <p style="color: #666; margin: 0; font-size: 11px;">© ${new Date().getFullYear()} Rossy's Enterprise Gifts & More</p>
+          </div>
+        </div>
+      `;
+
+      // Fire-and-forget — don't block the response
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+          from: process.env.RESEND_FROM_EMAIL || "Rossy's Enterprise <onboarding@resend.dev>",
+          to: order.customerEmail,
+          subject: `Order #${order.id} — ${status}`,
+          html: emailHtml,
+        }),
+      }).catch((err) => console.error("Email send failed:", err));
+    }
+
     res.json(order);
   } catch {
     res.status(500).json({ error: "Internal server error" });
