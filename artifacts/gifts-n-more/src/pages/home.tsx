@@ -761,7 +761,13 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
   );
 }
 
-function CategoryTile({ category, product, onClick, index, compact = false }: { category: string; product: Product; onClick: () => void; index: number; compact?: boolean }) {
+function CategoryTile({ category, product, onClick, index, compact = false }: { category: string; product?: Product; onClick: () => void; index: number; compact?: boolean }) {
+  if (!product) {
+    return (
+      <div className={cn("group relative overflow-hidden bg-muted animate-pulse", compact ? "aspect-[5/4]" : "aspect-[4/5]")} />
+    );
+  }
+
   return (
     <motion.button
       initial={{ opacity: 0, y: 30 }}
