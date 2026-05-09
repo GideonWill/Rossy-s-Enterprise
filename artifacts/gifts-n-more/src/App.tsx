@@ -20,7 +20,6 @@ import { AdminDashboard } from "@/pages/admin/dashboard";
 import { AdminInventory } from "@/pages/admin/inventory";
 import { AdminOrders } from "@/pages/admin/orders";
 import { AdminUsers } from "@/pages/admin/users";
-import { AdminSettings } from "@/pages/admin/settings";
 import type { Product } from "@/data";
 import { fetchProducts } from "@/api";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -137,9 +136,7 @@ function Routes({ products }: { products: Product[] }) {
       <Route path="/admin/users">
         <AdminUsers />
       </Route>
-      <Route path="/admin/settings">
-        <AdminSettings />
-      </Route>
+
       <Route component={NotFound} />
     </Switch>
   );

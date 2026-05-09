@@ -340,8 +340,8 @@ app.put("/api/orders/:id/status", requireAdmin, async (req: any, res) => {
       }).catch((err) => console.error("Email send failed:", err));
     }
 
-    // Send SMS notification to customer if they provided a phone number
-    if (order.customerPhone && process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+    // Send SMS notification via Arkesel (Ghana-based SMS provider)
+    if (order.customerPhone && process.env.ARKESEL_API_KEY) {
       const smsMessages: Record<string, string> = {
         "Pending": "Your order has been received and is awaiting processing.",
         "Processing": "Your order is now being prepared!",
@@ -349,32 +349,28 @@ app.put("/api/orders/:id/status", requireAdmin, async (req: any, res) => {
         "Cancelled": "Your order has been cancelled. Contact us on WhatsApp if you have questions.",
       };
 
-      // Format Ghana phone number: 0XX... → +233XX...
-      let phone = order.customerPhone.replace(/\s+/g, "");
+      // Format Ghana phone number: 0XX... → 233XX...
+      let phone = order.customerPhone.replace(/[\s\-+]/g, "");
       if (phone.startsWith("0")) {
-        phone = "+233" + phone.slice(1);
-      } else if (!phone.startsWith("+")) {
-        phone = "+233" + phone;
+        phone = "233" + phone.slice(1);
+      } else if (!phone.startsWith("233")) {
+        phone = "233" + phone;
       }
 
-      const smsBody = `Rossy's Enterprise — Order #${order.id}\nStatus: ${status}\n${smsMessages[status] || "Your order status has been updated."}\nAmount: GH₵${order.totalAmount?.toLocaleString("en-GH", { minimumFractionDigits: 2 })}\nDate Needed: ${order.dateNeeded}\nQuestions? WhatsApp: +233558198832`;
+      const smsBody = `Rossy's Enterprise - Order #${order.id}\nStatus: ${status}\n${smsMessages[status] || "Your order status has been updated."}\nAmount: GHS ${order.totalAmount?.toLocaleString("en-GH", { minimumFractionDigits: 2 })}\nDate Needed: ${order.dateNeeded}\nWhatsApp: +233558198832`;
 
-      const twilioSid = process.env.TWILIO_ACCOUNT_SID;
-      const twilioToken = process.env.TWILIO_AUTH_TOKEN;
-      const twilioFrom = process.env.TWILIO_PHONE_NUMBER || "";
-
-      // Fire-and-forget SMS
-      fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`, {
+      // Fire-and-forget SMS via Arkesel v2 API
+      fetch("https://sms.arkesel.com/api/v2/sms/send", {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: "Basic " + Buffer.from(`${twilioSid}:${twilioToken}`).toString("base64"),
+          "Content-Type": "application/json",
+          "api-key": process.env.ARKESEL_API_KEY,
         },
-        body: new URLSearchParams({
-          To: phone,
-          From: twilioFrom,
-          Body: smsBody,
-        }).toString(),
+        body: JSON.stringify({
+          sender: process.env.ARKESEL_SENDER_ID || "RossysEnt",
+          recipients: [phone],
+          message: smsBody,
+        }),
       }).catch((err) => console.error("SMS send failed:", err));
     }
 
