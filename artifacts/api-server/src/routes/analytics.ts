@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db, ordersTable, productsTable, usersTable } from "@workspace/db";
-import { count, sum } from "drizzle-orm";
+import { count, sum, sql } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 
 const analyticsRouter = Router();
@@ -32,11 +32,24 @@ analyticsRouter.get("/", requireAdmin, async (req, res) => {
     const totalProductsRes = await db.select({ value: count() }).from(productsTable);
     const totalUsersRes = await db.select({ value: count() }).from(usersTable);
 
+    // Fetch monthly sales for the last 6 months
+    const monthlySales = await db.execute(sql`
+      SELECT 
+        to_char(created_at, 'Mon') as month,
+        SUM(total_amount) as total,
+        to_char(created_at, 'MM') as month_num
+      FROM orders
+      WHERE created_at > NOW() - INTERVAL '12 months'
+      GROUP BY month, month_num
+      ORDER BY month_num ASC
+    `);
+
     res.json({
-      totalOrders: totalOrdersRes[0]?.value || 0,
-      totalRevenue: totalRevenueRes[0]?.value || 0,
-      totalProducts: totalProductsRes[0]?.value || 0,
-      totalUsers: totalUsersRes[0]?.value || 0,
+      totalOrders: Number(totalOrdersRes[0]?.value) || 0,
+      totalRevenue: Number(totalRevenueRes[0]?.value) || 0,
+      totalProducts: Number(totalProductsRes[0]?.value) || 0,
+      totalUsers: Number(totalUsersRes[0]?.value) || 0,
+      monthlySales: monthlySales.rows || [],
     });
   } catch (error) {
     console.error("Error fetching analytics", error);

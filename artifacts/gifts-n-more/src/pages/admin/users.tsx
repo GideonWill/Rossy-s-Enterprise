@@ -61,19 +61,19 @@ export function AdminUsers() {
 
         {isLoading ? (
           <div className="flex h-64 items-center justify-center">
-            <Loader2 className="h-10 w-10 animate-spin text-amber-600" />
+            <Loader2 className="h-10 w-10 animate-spin text-[#D4145A]" />
           </div>
         ) : (
-          <div className="rounded-[2.5rem] border border-zinc-100 bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-amber-900/5">
+          <div className="border border-zinc-100 bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-pink-900/5">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-zinc-50 bg-zinc-50/30">
-                    <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Identity</th>
-                    <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Contact Details</th>
-                    <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Membership</th>
-                    <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Status</th>
-                    <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-zinc-400 text-right">Access Control</th>
+                    <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Identity</th>
+                    <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Contact Details</th>
+                    <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Membership</th>
+                    <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400">Status</th>
+                    <th className="px-4 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400 text-right">Access Control</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-50">
@@ -85,48 +85,48 @@ export function AdminUsers() {
                       transition={{ delay: idx * 0.05 }}
                       className="group transition-colors hover:bg-zinc-50/50"
                     >
-                      <td className="px-8 py-6">
+                      <td className="px-4 py-6">
                         <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                          <div className="h-12 w-12 bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                             {u.name.charAt(0)}
                           </div>
                           <div className="flex flex-col gap-0.5">
                             <span className="font-bold text-zinc-900">{u.name}</span>
-                            <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">ID: #{u.id}</span>
+                            <span className="text-[10px] font-bold text-[#D4145A] uppercase tracking-widest">ID: #{u.id}</span>
                           </div>
                         </div>
                       </td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 py-6">
                         <div className="flex items-center gap-2 text-zinc-500 font-medium">
                           <Mail className="h-3.5 w-3.5 text-zinc-300" />
                           {u.email}
                         </div>
                       </td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 py-6">
                         <div className="flex items-center gap-2 text-zinc-400 font-bold text-[11px]">
                           <Calendar className="h-3.5 w-3.5" />
                           {new Date(u.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
                         </div>
                       </td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 py-6">
                         {u.role === "admin" ? (
-                          <span className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-600 border border-amber-100">
+                          <span className="inline-flex items-center gap-2 bg-pink-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#D4145A] border border-pink-100">
                             <Shield className="h-3 w-3" /> Administrator
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-2 rounded-full bg-zinc-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-500 border border-zinc-100">
+                          <span className="inline-flex items-center gap-2 bg-zinc-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-zinc-500 border border-zinc-100">
                             <UserIcon className="h-3 w-3" /> Client
                           </span>
                         )}
                       </td>
-                      <td className="px-8 py-6 text-right">
+                      <td className="px-4 py-6 text-right">
                         {u.id !== currentUser?.id ? (
                           <div className="flex items-center justify-end gap-3">
                             <button
                               onClick={() => updateRoleMutation.mutate({ id: u.id, role: u.role === "admin" ? "customer" : "admin" })}
                               disabled={updateRoleMutation.isPending}
                               className={cn(
-                                "rounded-xl border px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all",
+                                "border px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all",
                                 u.role === "admin" 
                                   ? "bg-red-50 border-red-100 text-red-600 hover:bg-red-600 hover:text-white"
                                   : "bg-zinc-900 border-zinc-900 text-white hover:bg-zinc-800"
@@ -134,7 +134,7 @@ export function AdminUsers() {
                             >
                               {u.role === "admin" ? "Revoke Access" : "Grant Access"}
                             </button>
-                            <button className="flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-zinc-100 text-zinc-400 transition-all hover:bg-zinc-50">
+                            <button className="flex h-9 w-9 items-center justify-center bg-white border border-zinc-100 text-zinc-400 transition-all hover:bg-zinc-50">
                               <MoreHorizontal className="h-4 w-4" />
                             </button>
                           </div>
@@ -149,6 +149,7 @@ export function AdminUsers() {
             </div>
           </div>
         )}
+
       </div>
     </AdminLayout>
   );

@@ -9,6 +9,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ExternalLink,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -48,10 +49,10 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     <div className="flex h-full flex-col bg-[#0F0F0F] text-zinc-400">
       <div className="flex h-24 items-center px-8">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-gradient-to-br from-[#B8860B] to-[#DAA520] rounded-lg shadow-lg shadow-amber-900/20" />
+          <img src="/rossy logo.png" alt="Rossy's" className="h-12 w-12 object-contain" />
           <div className="flex flex-col">
             <span className="font-serif text-lg font-bold tracking-tight text-white">Rossy's</span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B8860B]">Enterprise</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4145A]">Enterprise</span>
           </div>
         </div>
       </div>
@@ -63,20 +64,20 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             <Link key={item.href} href={item.href}>
               <a
                 className={cn(
-                  "group relative flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-medium transition-all duration-300",
+                  "group relative flex items-center gap-3 px-4 py-3.5 text-sm font-medium transition-all duration-300",
                   isActive
-                    ? "bg-gradient-to-r from-amber-500/10 to-transparent text-white"
+                    ? "bg-gradient-to-r from-pink-500/10 to-transparent text-white"
                     : "hover:bg-white/5 hover:text-white"
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="active-pill"
-                    className="absolute left-0 h-8 w-1 rounded-r-full bg-[#B8860B]"
+                    className="absolute left-0 h-8 w-1 bg-[#D4145A]"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <span className={cn("transition-colors duration-300", isActive ? "text-[#B8860B]" : "group-hover:text-[#B8860B]")}>
+                <span className={cn("transition-colors duration-300", isActive ? "text-[#D4145A]" : "group-hover:text-[#D4145A]")}>
                   {item.icon}
                 </span>
                 {item.label}
@@ -85,17 +86,28 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             </Link>
           );
         })}
+        
+        <div className="pt-6 mt-6 border-t border-white/5">
+          <Link href="/">
+            <a className="group flex items-center gap-3 px-4 py-3.5 text-sm font-medium transition-all duration-300 hover:bg-white/5 hover:text-white">
+              <span className="text-zinc-500 transition-colors duration-300 group-hover:text-[#FBB03B]">
+                <ExternalLink className="h-5 w-5" />
+              </span>
+              View Website
+            </a>
+          </Link>
+        </div>
       </nav>
 
       <div className="mt-auto border-t border-white/5 p-6 bg-black/20 backdrop-blur-md">
         <div className="mb-6 flex items-center gap-4 px-2">
           <div className="relative">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 p-[2px]">
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0F0F0F] text-sm font-bold text-white">
+            <div className="h-10 w-10 bg-gradient-to-tr from-[#D4145A] to-[#FBB03B] p-[2px]">
+              <div className="flex h-full w-full items-center justify-center bg-[#0F0F0F] text-sm font-bold text-white">
                 {user.name.charAt(0)}
               </div>
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-[#0F0F0F] bg-green-500" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 border-2 border-[#0F0F0F] bg-green-500" />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold text-white">{user.name}</span>
@@ -104,7 +116,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         </div>
         <Button
           variant="ghost"
-          className="w-full justify-start rounded-xl px-4 py-6 text-sm font-medium text-zinc-400 transition-all duration-300 hover:bg-destructive/10 hover:text-destructive group"
+          className="w-full justify-start px-4 py-6 text-sm font-medium text-zinc-400 transition-all duration-300 hover:bg-destructive/10 hover:text-destructive group"
           onClick={() => {
             logout();
             setLocation("/login");
@@ -133,7 +145,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-4 md:hidden">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-zinc-900"
+              className="flex h-10 w-10 items-center justify-center bg-zinc-100 text-zinc-900"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -159,7 +171,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-[#FDFCFB] p-8 md:p-12">
+        <main className="flex-1 overflow-y-auto bg-[#FDFCFB] p-4 md:p-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -191,7 +203,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               <SidebarContent />
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20"
+                className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20"
               >
                 <X className="h-5 w-5" />
               </button>

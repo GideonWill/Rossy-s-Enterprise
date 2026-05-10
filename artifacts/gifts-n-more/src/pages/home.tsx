@@ -33,6 +33,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { Chatbot } from "../components/Chatbot";
+import { useAuth } from "@/contexts/AuthContext";
+import { ShieldCheck } from "lucide-react";
 
 
 export type SortOption =
@@ -147,6 +149,7 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
   const [searchOpen, setSearchOpen] = useState(false);
   const [navSearch, setNavSearch] = useState("");
   const [location] = useLocation();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -176,6 +179,7 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
           <Link href="/categories" className={cn("transition-colors hover:text-primary py-1", location === "/categories" && "border-b-2 border-primary text-primary")} data-testid="link-categories">Categories</Link>
           <Link href="/collection" className={cn("transition-colors hover:text-primary py-1", location === "/collection" && "border-b-2 border-primary text-primary")} data-testid="link-collection">Collection</Link>
           <Link href="/sobolo" className={cn("transition-colors hover:text-primary py-1", location === "/sobolo" && "border-b-2 border-primary text-primary")} data-testid="link-sobolo">Sobolo Making</Link>
+          <Link href="/packaging" className={cn("transition-colors hover:text-primary py-1", location === "/packaging" && "border-b-2 border-primary text-primary")} data-testid="link-packaging">Packaging Portfolio</Link>
         </div>
         <div className={cn("flex items-center gap-3", scrolled ? "text-foreground" : "text-white")}>
           {searchOpen && (
@@ -209,6 +213,11 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
               </span>
             )}
           </Link>
+          {user?.role === "admin" && (
+            <Link href="/admin" className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/10 hover:text-primary border border-primary/20 bg-primary/5 shadow-lg shadow-pink-900/10" aria-label="Admin Panel">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -338,7 +347,7 @@ export function CollectionPage(props: ShopProps) {
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
       <PageHero title="Shop Collection" text="Search, sort, filter, and open any item to its own professional cart page." image={props.products[8]?.image || heroImage} />
-      <section className="py-20 md:py-28">
+      <section id="collection-results" className="py-20 md:py-28">
         <div className="container mx-auto px-6 md:px-12">
           <div className="mb-8 grid gap-4 border border-border bg-card p-4 shadow-sm md:grid-cols-[1fr_260px] md:p-5">
             <label className="flex items-center gap-3 border border-border bg-background px-4 py-3" data-testid="label-search-products">
@@ -424,7 +433,7 @@ export function ProductCartPage(props: ProductCartPageProps) {
 
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <section className="bg-card pt-32 md:pt-36">
+      <section id="product-details" className="bg-card pt-32 md:pt-36">
         <div className="container mx-auto px-6 pb-16 md:px-12">
           <Link href="/collection" className="mb-8 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary">
             <ArrowLeft className="h-4 w-4" /> Back to collection
@@ -483,6 +492,7 @@ export function ProductCartPage(props: ProductCartPageProps) {
 }
 
 export function CheckoutPage(props: ShopProps) {
+  const { token } = useAuth();
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -518,6 +528,11 @@ export function CheckoutPage(props: ShopProps) {
       return;
     }
 
+    if (!fullName.trim() || !phoneNumber.trim()) {
+      props.setCheckoutNotice("Please provide your name and phone number so we can contact you.");
+      return;
+    }
+
     setIsSubmitting(true);
     props.setCheckoutNotice("Saving your order...");
 
@@ -539,7 +554,7 @@ export function CheckoutPage(props: ShopProps) {
         }))
       };
 
-      await createOrder(orderData);
+      await createOrder(orderData, token);
       
       // 2. Clear cart
       props.clearCart();
@@ -570,6 +585,7 @@ export function CheckoutPage(props: ShopProps) {
         const amountInPesewas = Math.round(estimatedTotal * 100);
         params.append("amount", amountInPesewas.toString());
         params.append("readonly", "true");
+        params.append("callback_url", window.location.origin);
         
         window.location.href = `${paystackUrl}?${params.toString()}`;
         return;
@@ -579,8 +595,8 @@ export function CheckoutPage(props: ShopProps) {
       const message = `Hello Rossy's Enterprise,\n\nI want to make a pickup order.\n\n*Name:* ${fullName || 'N/A'}\n*Phone:* ${phoneNumber || 'N/A'}\n*Email:* ${email || 'N/A'}\n*Date Needed:* ${dateNeeded}\n*Express Delivery:* ${express ? 'YES' : 'NO'}\n\n*Items:*\n${itemsText}\n\n*Total:* ${formatCurrency(estimatedTotal)}\n\n*Notes:* ${orderNotes || 'None'}`;
       
       const whatsappUrl = `https://wa.me/233277811521?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-      props.setCheckoutNotice("Order saved! Opening WhatsApp to complete your pickup order...");
+      props.setCheckoutNotice("Order saved! Redirecting to WhatsApp to complete your pickup order...");
+      window.location.href = whatsappUrl;
     } catch (error) {
       console.error(error);
       props.setCheckoutNotice("There was an error saving your order. Please try again.");
@@ -738,7 +754,7 @@ function ProductGrid({ products: gridProducts, addToCart }: { products: Product[
 function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: (product: Product, quantity?: number) => void }) {
   return (
     <div className="group relative flex h-full flex-col" data-testid={`card-product-${product.id}`}>
-      <Link href={`/cart/${product.id}`} className="relative block aspect-[3/4] overflow-hidden bg-muted">
+      <Link href={`/cart/${product.id}#product-details`} className="relative block aspect-[3/4] overflow-hidden bg-muted">
         <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         <div className="absolute inset-x-0 bottom-0 translate-y-full bg-foreground/90 p-4 text-background transition-transform duration-300 group-hover:translate-y-0">
           <span className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest">
@@ -749,7 +765,7 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
       </Link>
       <div className="flex flex-1 flex-col pt-5">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{product.category}</p>
-        <Link href={`/cart/${product.id}`} className="font-serif text-xl leading-snug transition-colors hover:text-primary">{product.name}</Link>
+        <Link href={`/cart/${product.id}#product-details`} className="font-serif text-xl leading-snug transition-colors hover:text-primary">{product.name}</Link>
         <div className="mt-auto flex items-center justify-between pt-5">
           <p className="font-semibold">{product.priceStr}</p>
           <button disabled={product.isOutOfStock} onClick={() => onAddToCart(product, 1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40" aria-label={`Quick add ${product.name}`} data-testid={`button-quick-add-${product.id}`}>
@@ -874,6 +890,7 @@ function Footer() {
             <Link href="/categories" className="block hover:text-primary">Categories</Link>
             <Link href="/collection" className="block hover:text-primary">Collection</Link>
             <Link href="/sobolo" className="block hover:text-primary">Sobolo Making</Link>
+            <Link href="/packaging" className="block hover:text-primary">Packaging Portfolio</Link>
           </div>
         </div>
         <div>

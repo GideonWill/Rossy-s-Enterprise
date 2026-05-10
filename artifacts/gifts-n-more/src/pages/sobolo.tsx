@@ -1,20 +1,28 @@
 import { Layout, type ShopProps } from "./home";
 import { Sparkles, PlayCircle, Image as ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import soboloHero from "@assets/sobolo hero image.jpg";
 
 export default function SoboloPage(props: ShopProps) {
   return (
     <Layout cartCount={props.cartCount} searchProducts={props.searchProducts}>
-      <section className="relative flex min-h-[45dvh] items-center overflow-hidden bg-foreground pt-28 text-white">
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/30 to-transparent" />
+      <section className="relative flex min-h-[50dvh] items-center overflow-hidden bg-foreground pt-28 text-white">
+        <img src={soboloHero} alt="Sobolo Making" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/20 to-transparent" />
         
         <div className="container relative z-10 mx-auto px-6 text-center md:px-12">
-          <Sparkles className="mx-auto mb-6 h-10 w-10 text-primary opacity-90" />
-          <h1 className="font-serif text-5xl leading-tight md:text-7xl">Sobolo Making</h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
-            Watch our special preparations and discover the rich, refreshing taste of our homemade Sobolo (Bissap). Quality ingredients, crafted with love.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Sparkles className="mx-auto mb-6 h-10 w-10 text-primary opacity-90" />
+            <h1 className="font-serif text-5xl leading-tight md:text-7xl">Sobolo Making</h1>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
+              Watch our special preparations and discover the rich, refreshing taste of our homemade Sobolo (Bissap). Quality ingredients, crafted with love.
+            </p>
+          </motion.div>
         </div>
       </section>
 

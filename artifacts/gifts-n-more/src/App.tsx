@@ -1,5 +1,5 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +15,7 @@ import {
   type SortOption,
 } from "@/pages/home";
 import SoboloPage from "@/pages/sobolo";
+import PackagingPage from "@/pages/packaging";
 import { LoginPage, RegisterPage } from "@/pages/auth";
 import { AdminDashboard } from "@/pages/admin/dashboard";
 import { AdminInventory } from "@/pages/admin/inventory";
@@ -67,12 +68,12 @@ function Routes({ products }: { products: Product[] }) {
 
   const shopCategory = (category: string) => {
     setActiveCategory(category);
-    setLocation("/collection");
+    setLocation("/collection#collection-results");
   };
 
   const searchProducts = (query: string) => {
     setSearchQuery(query);
-    setLocation("/collection");
+    setLocation("/collection#collection-results");
   };
 
   const sharedProps = {
@@ -118,6 +119,9 @@ function Routes({ products }: { products: Product[] }) {
       <Route path="/sobolo">
         <SoboloPage {...sharedProps} />
       </Route>
+      <Route path="/packaging">
+        <PackagingPage {...sharedProps} />
+      </Route>
       <Route path="/login">
         <LoginPage />
       </Route>
@@ -156,12 +160,33 @@ function Main() {
   return <Routes products={products || []} />;
 }
 
+function ScrollToTop() {
+  const [location] = useLocation();
+  useEffect(() => {
+    // Check for hash in URL (e.g., #product-details)
+    const hash = window.location.hash;
+    if (hash) {
+      const element = document.getElementById(hash.substring(1));
+      if (element) {
+        // Delay slightly to ensure content is rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location]);
+  return null;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <ScrollToTop />
             <Main />
           </WouterRouter>
           <Toaster />

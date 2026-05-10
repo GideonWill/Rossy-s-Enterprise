@@ -17,10 +17,15 @@ export async function fetchProducts() {
   }
 }
 
-export async function createOrder(orderData: any) {
+export async function createOrder(orderData: any, token?: string | null) {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  
   const res = await fetch(`${API_BASE_URL}/orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(orderData),
   });
   if (!res.ok) throw new Error("Failed to create order");
