@@ -1,4 +1,4 @@
-# Gifts N More Shop
+# Rossy's Enterprise Gifts & More
 
 ## Overview
 
