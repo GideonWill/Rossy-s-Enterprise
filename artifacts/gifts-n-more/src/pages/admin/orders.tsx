@@ -8,6 +8,13 @@ import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+type OrderItem = {
+  productId: string;
+  quantity: number;
+  priceAtTime: number;
+  productName: string;
+};
+
 type Order = {
   id: number;
   status: string;
@@ -20,6 +27,7 @@ type Order = {
   customerEmail: string;
   orderNotes: string;
   createdAt: string;
+  items?: OrderItem[];
 };
 
 export function AdminOrders() {
@@ -166,6 +174,23 @@ export function AdminOrders() {
                              <span className="h-1 w-1 bg-zinc-300" />
                              {order.isExpress ? 'EXPRESS' : 'STANDARD'}
                           </div>
+                          {order.items && order.items.length > 0 && (
+                            <div className="mt-4 flex flex-col gap-2 border-t border-zinc-50 pt-3">
+                              <p className="text-[9px] font-black uppercase tracking-widest text-zinc-300">Items Ordered</p>
+                              {order.items.map((item, i) => (
+                                <a 
+                                  key={i}
+                                  href={`/cart/${item.productId}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="flex items-center gap-2 text-[11px] font-bold text-[#D4145A] hover:underline"
+                                >
+                                  <ExternalLink className="h-3 w-3" />
+                                  {item.quantity}x {item.productName || 'Product'}
+                                </a>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="px-4 py-6">

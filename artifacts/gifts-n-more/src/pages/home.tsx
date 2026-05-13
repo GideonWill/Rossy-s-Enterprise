@@ -585,7 +585,11 @@ export function CheckoutPage(props: ShopProps) {
         return;
       }
 
-      const itemsText = props.cartItems.map(item => `${item.quantity}x ${item.product.name}`).join("\n");
+      const itemsText = props.cartItems.map(item => {
+        const productUrl = `${window.location.origin}/cart/${item.product.id}`;
+        return `${item.quantity}x ${item.product.name}\n🔗 View: ${productUrl}`;
+      }).join("\n\n");
+      
       const message = `Hello Rossy's Enterprise,\n\nI want to make a pickup order.\n\n*Name:* ${fullName || 'N/A'}\n*Phone:* ${phoneNumber || 'N/A'}\n*Email:* ${email || 'N/A'}\n*Date Needed:* ${dateNeeded}\n*Express Delivery:* ${express ? 'YES' : 'NO'}\n\n*Items:*\n${itemsText}\n\n*Total:* ${formatCurrency(estimatedTotal)}\n\n*Notes:* ${orderNotes || 'None'}`;
       
       const whatsappUrl = `https://wa.me/233277811521?text=${encodeURIComponent(message)}`;

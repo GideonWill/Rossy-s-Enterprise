@@ -265,8 +265,27 @@ app.post("/api/orders", optionalAuth, async (req: any, res) => {
 
 app.get("/api/orders", requireAdmin, async (_req, res) => {
   try {
-    const orders = await getDb().query.ordersTable.findMany({ orderBy: [desc(ordersTable.createdAt)] });
-    res.json(orders);
+    const database = getDb();
+    const orders = await database.query.ordersTable.findMany({ orderBy: [desc(ordersTable.createdAt)] });
+
+    // Attach items + product name to each order
+    const ordersWithItems = await Promise.all(
+      orders.map(async (order) => {
+        const items = await database
+          .select({
+            productId: orderItemsTable.productId,
+            quantity: orderItemsTable.quantity,
+            priceAtTime: orderItemsTable.priceAtTime,
+            productName: productsTable.name,
+          })
+          .from(orderItemsTable)
+          .leftJoin(productsTable, eq(orderItemsTable.productId, productsTable.id))
+          .where(eq(orderItemsTable.orderId, order.id));
+        return { ...order, items };
+      })
+    );
+
+    res.json(ordersWithItems);
   } catch {
     res.status(500).json({ error: "Internal server error" });
   }
