@@ -34,7 +34,6 @@ import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { Chatbot } from "../components/Chatbot";
 import { useAuth } from "@/contexts/AuthContext";
-import { ShieldCheck } from "lucide-react";
 
 
 export type SortOption =
@@ -213,11 +212,6 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
               </span>
             )}
           </Link>
-          {user?.role === "admin" && (
-            <Link href="/admin" className="flex h-10 w-10 items-center justify-center rounded-full transition-all hover:bg-white/10 hover:text-primary border border-primary/20 bg-primary/5 shadow-lg shadow-pink-900/10" aria-label="Admin Panel">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-            </Link>
-          )}
         </div>
       </nav>
 
