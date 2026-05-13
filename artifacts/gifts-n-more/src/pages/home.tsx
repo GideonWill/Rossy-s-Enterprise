@@ -556,7 +556,7 @@ export function CheckoutPage(props: ShopProps) {
       // 3. Redirect to payment/whatsapp
       if (props.paymentMethod === "paystack") {
         const expressText = express ? "YES" : "NO";
-        let paystackUrl = "https://paystack.shop/pay/lnzs80tt-9";
+        let paystackUrl = "https://paystack.com/pay/lnzs80tt-9";
         
         const params = new URLSearchParams();
         if (email) params.append("email", email);
