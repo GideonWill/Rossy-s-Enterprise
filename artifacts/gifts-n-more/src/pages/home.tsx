@@ -556,7 +556,7 @@ export function CheckoutPage(props: ShopProps) {
       // 3. Redirect to payment/whatsapp
       if (props.paymentMethod === "paystack") {
         const expressText = express ? "YES" : "NO";
-        let paystackUrl = "https://paystack.shop/pay/xwalvml4p0";
+        let paystackUrl = "https://paystack.shop/pay/lnzs80tt-9";
         
         const params = new URLSearchParams();
         if (email) params.append("email", email);
@@ -575,9 +575,11 @@ export function CheckoutPage(props: ShopProps) {
         params.append("custom_fields[1][value]", expressText);
         
         // Paystack accepts the amount in the lowest currency unit (pesewas/kobo).
-        // Passing the amount via URL automatically makes the field read-only on the payment page.
+        // amountInPesewas is sent to the Paystack page.
         const amountInPesewas = Math.round(estimatedTotal * 100);
         params.append("amount", amountInPesewas.toString());
+        
+        // This parameter attempts to make the amount field read-only if the Paystack page allows dynamic amounts.
         params.append("readonly", "true");
         params.append("callback_url", window.location.origin);
         
