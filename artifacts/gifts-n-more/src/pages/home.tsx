@@ -22,7 +22,6 @@ import {
   Plus,
   Search,
   ShoppingBag,
-  Sparkles,
   Star,
   Trash2,
   Truck,
@@ -555,37 +554,27 @@ export function CheckoutPage(props: ShopProps) {
 
       // 3. Redirect to payment/whatsapp
       if (props.paymentMethod === "paystack") {
-        const expressText = express ? "YES" : "NO";
-        let paystackUrl = "https://paystack.com/pay/lnzs80tt-9";
-        
-        const params = new URLSearchParams();
-        if (email) params.append("email", email);
-        if (fullName) {
-          const parts = fullName.split(" ");
-          params.append("first_name", parts[0]);
-          if (parts.length > 1) params.append("last_name", parts.slice(1).join(" "));
-        }
-        if (phoneNumber) params.append("phone", phoneNumber);
-        
-        params.append("custom_fields[0][display_name]", "Date Needed");
-        params.append("custom_fields[0][variable_name]", "date_needed");
-        params.append("custom_fields[0][value]", dateNeeded);
-        params.append("custom_fields[1][display_name]", "Express Delivery");
-        params.append("custom_fields[1][variable_name]", "express_delivery");
-        params.append("custom_fields[1][value]", expressText);
-        
-        // Paystack accepts the amount in the lowest currency unit (pesewas/kobo).
-        // amountInPesewas is sent to the Paystack page.
         const amountInPesewas = Math.round(estimatedTotal * 100);
-        params.append("amount", amountInPesewas.toString());
         
-        // This parameter attempts to make the amount field read-only if the Paystack page allows dynamic amounts.
-        params.append("readonly", "true");
-        params.append("callback_url", window.location.origin);
+        const handler = (window as any).PaystackPop.setup({
+          key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_ADD_YOUR_KEY_HERE", // Replace with actual key
+          email: email || "customer@example.com",
+          amount: amountInPesewas,
+          currency: "GHS",
+          ref: "ORD-" + new Date().getTime(), // Generate a unique reference
+          callback: function(response: any) {
+            props.setCheckoutNotice("Payment successful! Reference: " + response.reference);
+            window.location.href = "/"; // Or redirect to a success page
+          },
+          onClose: function() {
+            props.setCheckoutNotice("Payment was cancelled.");
+          }
+        });
         
-        window.location.href = `${paystackUrl}?${params.toString()}`;
+        handler.openIframe();
         return;
       }
+
 
       const itemsText = props.cartItems.map(item => {
         const productUrl = `${window.location.origin}/cart/${item.product.id}`;
@@ -826,7 +815,6 @@ function CorporateBanner() {
   return (
     <section className="bg-primary px-6 py-20 text-center text-primary-foreground">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="mx-auto max-w-3xl space-y-6">
-        <Sparkles className="mx-auto h-8 w-8 opacity-80" />
         <h2 className="font-serif text-3xl md:text-5xl">Corporate Gifting & Special Occasions</h2>
         <p className="mx-auto max-w-2xl text-lg font-light text-primary-foreground/90 md:text-xl">
           Looking for customized hampers or bulk orders for weddings, anniversaries, graduations, or corporate events? We create tailored gifting experiences.

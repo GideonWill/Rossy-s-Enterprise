@@ -368,5 +368,104 @@ export const products: Product[] = [
     isOutOfStock: false,
     category: "Valentine’s Day",
     isFeatured: true
+  },
+  {
+    id: "p36",
+    name: "Azzaro Perfume",
+    price: 1200,
+    priceStr: "GH₵1,200.00",
+    image: "/Azzaro Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p37",
+    name: "Bleu De Chanel",
+    price: 2500,
+    priceStr: "GH₵2,500.00",
+    image: "/Bleu De Chanel.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p38",
+    name: "FOGG Scent Perfume",
+    price: 350,
+    priceStr: "GH₵350.00",
+    image: "/FOGG Scent Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p39",
+    name: "Forever Wanted Perfume",
+    price: 1800,
+    priceStr: "GH₵1,800.00",
+    image: "/Forever Wanted Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p40",
+    name: "Gentlemen Givenchy",
+    price: 2100,
+    priceStr: "GH₵2,100.00",
+    image: "/Gentlemen Givenchy.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p41",
+    name: "Gucci Guilty",
+    price: 2300,
+    priceStr: "GH₵2,300.00",
+    image: "/Gucci Guilty.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p42",
+    name: "Versace Eros Perfume",
+    price: 1950,
+    priceStr: "GH₵1,950.00",
+    image: "/Versace Eros Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p43",
+    name: "Valentino Perfume",
+    price: 2600,
+    priceStr: "GH₵2,600.00",
+    image: "/Valentino Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p44",
+    name: "Spice Bomb Perfume",
+    price: 1750,
+    priceStr: "GH₵1,750.00",
+    image: "/Spice Bomb Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p45",
+    name: "Sauvage Perfume",
+    price: 2800,
+    priceStr: "GH₵2,800.00",
+    image: "/Sauvage Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
+  },
+  {
+    id: "p46",
+    name: "Hugo Boss Perfume",
+    price: 1600,
+    priceStr: "GH₵1,600.00",
+    image: "/Hugo Boss Perfume.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Him"
   }
 ];

@@ -1,5 +1,5 @@
 import { Layout, type ShopProps } from "./home";
-import { Sparkles, PlayCircle, X, Image as ImageIcon } from "lucide-react";
+import { PlayCircle, X, Image as ImageIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import soboloHero from "@assets/sobolo hero image.jpg";
@@ -157,7 +157,6 @@ export default function SoboloPage(props: ShopProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Sparkles className="mx-auto mb-6 h-10 w-10 text-primary opacity-90" />
             <h1 className="font-serif text-5xl leading-tight md:text-7xl">Sobolo Making</h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg font-medium leading-relaxed text-white/85 md:text-xl">
               Watch our special preparations and discover the rich, refreshing taste of our homemade Sobolo (Bissap). Quality ingredients, crafted with love.

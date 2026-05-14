@@ -1,5 +1,5 @@
 import { Layout, type ShopProps } from "./home";
-import { PackageCheck, PlayCircle, Image as ImageIcon, Sparkles } from "lucide-react";
+import { PackageCheck, PlayCircle, Image as ImageIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import corporateGiftsImage from "@assets/image_1776005308789.png";
 
@@ -122,7 +122,6 @@ export default function PackagingPage(props: ShopProps) {
           </div>
           
           <div className="mt-20 border border-dashed border-border bg-card p-16 text-center">
-            <Sparkles className="mx-auto mb-6 h-8 w-8 text-primary opacity-40" />
             <h3 className="font-serif text-2xl mb-4">Your Packaging Story</h3>
             <p className="text-muted-foreground max-w-xl mx-auto">
               This space is ready for your premium packaging videos and high-quality photography. Show your clients the care and detail that goes into every Rossy's Enterprise package.

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Phone, Sparkles, ShoppingBag, Truck, CreditCard, Mail, Compass } from "lucide-react";
+import { MessageCircle, X, Send, Phone, Gift, ShoppingBag, Truck, CreditCard, Mail, Compass } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -31,7 +31,7 @@ const KNOWLEDGE_BASE = [
   {
     question: "Custom hampers?",
     answer: "Yes! We specialize in corporate gifting and customized hampers for weddings, anniversaries, and more.",
-    icon: <Sparkles className="h-4 w-4" />,
+    icon: <Gift className="h-4 w-4" />,
   },
   {
     question: "Contact details",
@@ -129,7 +129,7 @@ export function Chatbot() {
             <div className="flex items-center justify-between bg-primary p-4 text-primary-foreground">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-                  <Sparkles className="h-4 w-4" />
+                  <MessageCircle className="h-4 w-4" />
                 </div>
                 <div>
                   <h3 className="text-sm font-bold uppercase tracking-widest">Rossy's Assistant</h3>
