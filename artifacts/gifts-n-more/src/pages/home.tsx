@@ -557,7 +557,7 @@ export function CheckoutPage(props: ShopProps) {
         const amountInPesewas = Math.round(estimatedTotal * 100);
         
         const handler = (window as any).PaystackPop.setup({
-          key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_ADD_YOUR_KEY_HERE", // Replace with actual key
+          key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_live_8f76f86066b61322d8c18aa41248fae469cf15f8", // Using the provided live key as fallback
           email: email || "customer@example.com",
           amount: amountInPesewas,
           currency: "GHS",

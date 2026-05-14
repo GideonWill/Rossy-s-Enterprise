@@ -467,5 +467,275 @@ export const products: Product[] = [
     image: "/Hugo Boss Perfume.jpg",
     isOutOfStock: false,
     category: "Gifts For Him"
+  },
+  {
+    id: "p47",
+    name: "Luxury Pink Rose & Skincare Set",
+    price: 1250,
+    priceStr: "GH₵1,250.00",
+    image: "/Gift for her package set1.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Her"
+  },
+  {
+    id: "p48",
+    name: "Premium Pamper Box with Chocolates",
+    price: 1850,
+    priceStr: "GH₵1,850.00",
+    image: "/Gift for her package set2.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Her"
+  },
+  {
+    id: "p49",
+    name: "Elegant Satin & Fragrance Gift Set",
+    price: 950,
+    priceStr: "GH₵950.00",
+    image: "/Gift for her package set3.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Her"
+  },
+  {
+    id: "p50",
+    name: "Ultimate Relaxation Spa & Treats Box",
+    price: 2100,
+    priceStr: "GH₵2,100.00",
+    image: "/Gift for her package set4.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Her"
+  },
+  {
+    id: "p51",
+    name: "Classic Beauty Collection Package",
+    price: 1500,
+    priceStr: "GH₵1,500.00",
+    image: "/Gift for her package set5.jpg",
+    isOutOfStock: false,
+    category: "Gifts For Her"
+  },
+  {
+    id: "p52",
+    name: "Special Mum Relaxation Box",
+    price: 1300,
+    priceStr: "GH₵1,300.00",
+    image: "/Mother's day Package 1.jpg",
+    isOutOfStock: false,
+    category: "Mothers Day / Gifts For Mum"
+  },
+  {
+    id: "p53",
+    name: "Luxury Mother's Pamper Treats",
+    price: 2400,
+    priceStr: "GH₵2,400.00",
+    image: "/Mother's day Package 2.jpg",
+    isOutOfStock: false,
+    category: "Mothers Day / Gifts For Mum"
+  },
+  {
+    id: "p54",
+    name: "Premium Mother's Day Skincare Basket",
+    price: 1850,
+    priceStr: "GH₵1,850.00",
+    image: "/Mother's day Package 3.jpg",
+    isOutOfStock: false,
+    category: "Mothers Day / Gifts For Mum"
+  },
+  {
+    id: "p55",
+    name: "Elegant Mum Gift Hamper & Fragrance",
+    price: 3100,
+    priceStr: "GH₵3,100.00",
+    image: "/Mother's day Package 4.jpg",
+    isOutOfStock: false,
+    category: "Mothers Day / Gifts For Mum"
+  },
+  {
+    id: "p56",
+    name: "Ultimate Queen Mother Celebration Box",
+    price: 4500,
+    priceStr: "GH₵4,500.00",
+    image: "/Mother's day Package 5.jpg",
+    isOutOfStock: false,
+    category: "Mothers Day / Gifts For Mum"
+  },
+  {
+    id: "p57",
+    name: "Classic Gentleman's Gift Box",
+    price: 1200,
+    priceStr: "GH₵1,200.00",
+    image: "/Fathers Day Package 1.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p58",
+    name: "Executive Dad Grooming Set",
+    price: 1800,
+    priceStr: "GH₵1,800.00",
+    image: "/Fathers Day Package 2.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p59",
+    name: "Premium Watch & Wallet Collection",
+    price: 2500,
+    priceStr: "GH₵2,500.00",
+    image: "/Fathers Day Package 3.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p60",
+    name: "Luxury Father's Pamper Hamper",
+    price: 3200,
+    priceStr: "GH₵3,200.00",
+    image: "/Fathers Day Package 4.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p61",
+    name: "Ultimate Best Dad Survival Kit",
+    price: 1550,
+    priceStr: "GH₵1,550.00",
+    image: "/Fathers Day Package 5.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p62",
+    name: "Elite Father's Day Celebration Package",
+    price: 4000,
+    priceStr: "GH₵4,000.00",
+    image: "/Fathers Day Package 6.jpg",
+    isOutOfStock: false,
+    category: "Father's Day/ Gifts For Dad"
+  },
+  {
+    id: "p63",
+    name: "Classic Fluffy Teddy Bear",
+    price: 450,
+    priceStr: "GH₵450.00",
+    image: "/Teddy bear package 1.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p64",
+    name: "Giant Cuddly Bear",
+    price: 900,
+    priceStr: "GH₵900.00",
+    image: "/Teddy bear package 2.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p65",
+    name: "Cute Pink Ribbon Bear",
+    price: 600,
+    priceStr: "GH₵600.00",
+    image: "/Teddy bear package 3.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p66",
+    name: "Romantic Love Teddy Set",
+    price: 1100,
+    priceStr: "GH₵1,100.00",
+    image: "/Teddy bear package 4.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p67",
+    name: "Premium Soft Snuggle Bear",
+    price: 750,
+    priceStr: "GH₵750.00",
+    image: "/Teddy bear package 5.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p68",
+    name: "Jumbo Celebration Bear",
+    price: 1400,
+    priceStr: "GH₵1,400.00",
+    image: "/Teddy bear package 6.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p69",
+    name: "Luxury Huggable Bear",
+    price: 850,
+    priceStr: "GH₵850.00",
+    image: "/Teddy bear package 7.jpg",
+    isOutOfStock: false,
+    category: "Teddy Bears"
+  },
+  {
+    id: "p70",
+    name: "Luxury Grooming & Fragrance Set for Men 1",
+    price: 1200,
+    priceStr: "GH₵1,200.00",
+    image: "/perfume bath and body for men package 1.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p71",
+    name: "Luxury Grooming & Fragrance Set for Men 2",
+    price: 1350,
+    priceStr: "GH₵1,350.00",
+    image: "/perfume bath and body for men package 2.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p72",
+    name: "Luxury Grooming & Fragrance Set for Men 3",
+    price: 1100,
+    priceStr: "GH₵1,100.00",
+    image: "/perfume bath and body for men package 3.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p73",
+    name: "Luxury Grooming & Fragrance Set for Men 4",
+    price: 1500,
+    priceStr: "GH₵1,500.00",
+    image: "/perfume bath and body for men package 4.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p74",
+    name: "Luxury Grooming & Fragrance Set for Men 5",
+    price: 1450,
+    priceStr: "GH₵1,450.00",
+    image: "/perfume bath and body for men package 5.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p75",
+    name: "Luxury Grooming & Fragrance Set for Men 6",
+    price: 1250,
+    priceStr: "GH₵1,250.00",
+    image: "/perfume bath and body for men package 6.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p76",
+    name: "Luxury Grooming & Fragrance Set for Men 7",
+    price: 1600,
+    priceStr: "GH₵1,600.00",
+    image: "/perfume bath and body for men package 7.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Him"
   }
 ];

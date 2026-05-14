@@ -12,37 +12,94 @@ type Message = {
   timestamp: Date;
 };
 
-const KNOWLEDGE_BASE = [
+const SUGGESTED_QUESTIONS = [
   {
     question: "What do you sell?",
-    answer: "We offer a curated selection of gifts, hampers, jewelry, perfumes, bath & body sets, and special occasion items. Check our Collection for more!",
     icon: <ShoppingBag className="h-4 w-4" />,
   },
   {
     question: "Where do you deliver?",
-    answer: "We provide swift and secure delivery services to your loved ones across Accra. Delivery fees may apply based on location.",
     icon: <Truck className="h-4 w-4" />,
   },
   {
     question: "How can I pay?",
-    answer: "You can pay online via Paystack (Cards, Mobile Money) or choose the Pickup option to pay at our location.",
     icon: <CreditCard className="h-4 w-4" />,
   },
   {
-    question: "Custom hampers?",
-    answer: "Yes! We specialize in corporate gifting and customized hampers for weddings, anniversaries, and more.",
-    icon: <Gift className="h-4 w-4" />,
-  },
-  {
     question: "Contact details",
-    answer: "WhatsApp: +233 55 819 8832\nEmail: okangrosemond490@gmail.com\nTikTok: @rossys.enterprise",
     icon: <Phone className="h-4 w-4" />,
   },
+];
+
+const KNOWLEDGE_BASE = [
   {
-    question: "Site Navigation",
-    answer: "Here are the quick links to our main pages:\n• [Home](/)\n• [All Categories](/categories)\n• [Full Collection](/collection)\n• [Your Cart & Checkout](/checkout)\n• [Sobolo Making](/sobolo)",
-    icon: <Compass className="h-4 w-4" />,
+    keywords: ["him", "men", "man", "boyfriend", "husband", "father", "dad", "guy", "male", "groom", "mens", "boy"],
+    answer: "We have an amazing 'Gifts for Him' collection! It includes premium watches, wallets, perfumes (like Azzaro, Chanel, Dior, Versace), grooming sets, and more. Check out our 'Gifts For Him' category in the Collection.",
   },
+  {
+    keywords: ["her", "women", "woman", "girlfriend", "wife", "mother", "mom", "lady", "girl", "bride", "womens", "mum"],
+    answer: "For the special ladies, we offer luxury 'Gifts for Her' including fine jewelry, premium perfumes, spa & skincare pamper boxes, and elegant satin gift sets. Browse our 'Gifts For Her' category!",
+  },
+  {
+    keywords: ["sobolo", "drink", "bissap", "beverage", "refreshment", "juice"],
+    answer: "Yes! We make rich, refreshing homemade Sobolo (Bissap). Quality ingredients, crafted with love. Check out our 'Sobolo Making' page to see our special preparations.",
+  },
+  {
+    keywords: ["package", "packaging", "wrap", "wrapping", "box", "hamper", "corporate", "bulk", "custom"],
+    answer: "We provide premium packaging services and customized hampers for corporate events, weddings, anniversaries, and graduations. Visit our 'Packaging Portfolio' page or chat with our Gifting Expert on WhatsApp for custom orders.",
+  },
+  {
+    keywords: ["deliver", "delivery", "shipping", "send", "location", "accra", "where"],
+    answer: "We offer swift and secure delivery services across Accra. Delivery fees may apply depending on your exact location. We also offer a Pickup option at checkout!",
+  },
+  {
+    keywords: ["pay", "payment", "cost", "price", "money", "card", "momo", "paystack"],
+    answer: "You can pay securely online via Paystack (which accepts Cards and Mobile Money), or you can choose the Pickup option if you prefer to pay upon collection.",
+  },
+  {
+    keywords: ["contact", "phone", "whatsapp", "call", "email", "tiktok", "reach", "number"],
+    answer: "You can reach us directly on WhatsApp at +233 55 819 8832, via email at okangrosemond490@gmail.com, or check out our TikTok @rossys.enterprise.",
+  },
+  {
+    keywords: ["perfume", "fragrance", "scent", "cologne", "smell", "spray"],
+    answer: "We carry a wide variety of premium authentic perfumes for both men and women, including brands like Chanel, Dior Sauvage, Versace, Gucci, Valentino, Hugo Boss, and Azzaro. Check the Perfume categories in our Collection!",
+  },
+  {
+    keywords: ["jewelry", "necklace", "earring", "ring", "gold", "silver", "pendant"],
+    answer: "We have beautiful luxury jewelry pieces including gold necklaces, pendants, and earring sets. Browse the 'Jewelery' category in our Collection.",
+  },
+  {
+    keywords: ["card", "cards", "birthday", "sympathy", "thank you", "congratulation", "anniversary", "greeting"],
+    answer: "We offer a wide variety of greeting cards for every occasion: Birthdays, Anniversaries, Congratulations, Sympathy, Thank You, and more. Add a thoughtful card to your gift package!",
+  },
+  {
+    keywords: ["valentine", "love", "romantic", "romance", "rose", "teddy", "bear"],
+    answer: "Looking for something romantic? We have a special Valentine's Day and Romance collection featuring giant red teddy bears, heart boxes, red roses, and chocolates.",
+  },
+  {
+    keywords: ["ramadan", "iftar", "fasting", "muslim", "eid", "islamic", "fruit", "snack"],
+    answer: "For Ramadan, we offer specialized Fresh Fruits Iftar Baskets, Premium Snack & Nuts Baskets, and Halal treats perfect for breaking the fast or gifting during Eid.",
+  },
+  {
+    keywords: ["what do you sell", "products", "items", "shop", "store", "buy", "offer"],
+    answer: "We offer a curated selection of premium gifts, hampers, jewelry, perfumes, bath & body sets, greeting cards, and special occasion items. We also make homemade Sobolo! Check our Collection page for more.",
+  },
+  {
+    keywords: ["navigation", "links", "pages", "categories"],
+    answer: "Here are the quick links to our main pages:\n• [Home](/)\n• [All Categories](/categories)\n• [Full Collection](/collection)\n• [Your Cart & Checkout](/checkout)\n• [Sobolo Making](/sobolo)",
+  },
+  {
+    keywords: ["hi", "hello", "hey", "greetings"],
+    answer: "Hello there! How can I assist you with your gifting needs today? Feel free to ask about our gifts for men/women, delivery, or custom hampers.",
+  },
+  {
+    keywords: ["thanks", "thank you", "thx", "appreciate"],
+    answer: "You're very welcome! Let me know if there's anything else I can help you with.",
+  },
+  {
+    keywords: ["yes", "okay", "ok", "sure", "alright", "yep", "yeah", "chat", "personnel", "vendor"],
+    answer: "Great! You can [Chat with our Gifting Expert on WhatsApp](https://wa.me/233558198832) right away to place a custom order or ask any specific questions!",
+  }
 ];
 
 export function Chatbot() {
@@ -80,16 +137,27 @@ export function Chatbot() {
     // Simple bot logic
     setTimeout(() => {
       const lowerText = text.toLowerCase();
-      let response = "I'm sorry, I don't have information on that yet. Would you like to chat with our gifting expert on WhatsApp?";
+      let response = "I'm sorry, I don't have information on that yet. Would you like to [Chat with our Gifting Expert on WhatsApp](https://wa.me/233558198832) for more help?";
       
-      const found = KNOWLEDGE_BASE.find(k => 
-        lowerText.includes(k.question.toLowerCase()) || 
-        k.question.toLowerCase().includes(lowerText) ||
-        (k.answer.toLowerCase().includes(lowerText) && lowerText.length > 3)
-      );
+      const words = lowerText.split(/\s+/).map(w => w.replace(/[^\w]/g, ''));
+      let bestMatch = null;
+      let highestScore = 0;
 
-      if (found) {
-        response = found.answer;
+      KNOWLEDGE_BASE.forEach(kb => {
+        let score = 0;
+        kb.keywords.forEach(kw => {
+          if (words.includes(kw)) score += 3;
+          else if (lowerText.includes(kw)) score += 1;
+        });
+
+        if (score > highestScore) {
+          highestScore = score;
+          bestMatch = kb;
+        }
+      });
+
+      if (bestMatch && highestScore > 0) {
+        response = bestMatch.answer;
       }
 
       const botMessage: Message = {
@@ -205,7 +273,7 @@ export function Chatbot() {
               {messages.length === 1 && (
                 <div className="grid grid-cols-1 gap-2 pt-2">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">Common Questions</p>
-                  {KNOWLEDGE_BASE.map((item) => (
+                  {SUGGESTED_QUESTIONS.map((item) => (
                     <button
                       key={item.question}
                       onClick={() => handleSend(item.question)}
