@@ -26,6 +26,7 @@ import {
   Trash2,
   Truck,
   X,
+  Menu,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -145,6 +146,7 @@ function subtotalOf(cartItems: CartItem[]) {
 export function Layout({ children, cartCount, searchProducts }: { children: ReactNode; cartCount: number; searchProducts: (query: string) => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [navSearch, setNavSearch] = useState("");
   const [location] = useLocation();
   const { user } = useAuth();
@@ -211,8 +213,98 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
               </span>
             )}
           </Link>
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-white/10 hover:text-primary md:hidden"
+            aria-label="Open menu"
+            data-testid="button-open-mobile-menu"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[60] bg-background p-6 md:hidden"
+          >
+            <div className="mb-12 flex items-center justify-between">
+              <img src={logoSrc} alt="ROSSY'S ENTERPRISE" className="h-10 w-auto" />
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-muted transition-colors hover:bg-muted/80"
+                aria-label="Close menu"
+                data-testid="button-close-mobile-menu"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="flex flex-col gap-6">
+              <Link
+                href="/categories"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "text-2xl font-bold uppercase tracking-widest transition-colors hover:text-primary",
+                  location === "/categories" ? "text-primary" : "text-foreground"
+                )}
+                data-testid="mobile-link-categories"
+              >
+                Categories
+              </Link>
+              <Link
+                href="/collection"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "text-2xl font-bold uppercase tracking-widest transition-colors hover:text-primary",
+                  location === "/collection" ? "text-primary" : "text-foreground"
+                )}
+                data-testid="mobile-link-collection"
+              >
+                Collection
+              </Link>
+              <Link
+                href="/sobolo"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "text-2xl font-bold uppercase tracking-widest transition-colors hover:text-primary",
+                  location === "/sobolo" ? "text-primary" : "text-foreground"
+                )}
+                data-testid="mobile-link-sobolo"
+              >
+                Sobolo Making
+              </Link>
+              <Link
+                href="/packaging"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "text-2xl font-bold uppercase tracking-widest transition-colors hover:text-primary",
+                  location === "/packaging" ? "text-primary" : "text-foreground"
+                )}
+                data-testid="mobile-link-packaging"
+              >
+                Packaging Portfolio
+              </Link>
+              <div className="mt-8 border-t border-border pt-8">
+                <a
+                  href="https://wa.me/233558198832"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 text-lg font-medium text-primary"
+                  data-testid="mobile-link-contact"
+                >
+                  <Phone className="h-5 w-5" />
+                  <span>Contact via WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {searchOpen && (
         <div className="fixed left-4 right-4 top-20 z-40 border border-border bg-background p-3 shadow-xl md:hidden">
