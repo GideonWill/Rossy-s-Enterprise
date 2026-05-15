@@ -677,7 +677,7 @@ export const products: Product[] = [
   },
   {
     id: "p70",
-    name: "Luxury Grooming & Fragrance Set for Men 1",
+    name: "Elite Gentleman's Grooming & Fragrance Box",
     price: 1200,
     priceStr: "GH₵1,200.00",
     image: "/perfume bath and body for men package 1.jpg",
@@ -686,7 +686,7 @@ export const products: Product[] = [
   },
   {
     id: "p71",
-    name: "Luxury Grooming & Fragrance Set for Men 2",
+    name: "Ultimate Male Pamper & Scent Collection",
     price: 1350,
     priceStr: "GH₵1,350.00",
     image: "/perfume bath and body for men package 2.jpg",
@@ -695,7 +695,7 @@ export const products: Product[] = [
   },
   {
     id: "p72",
-    name: "Luxury Grooming & Fragrance Set for Men 3",
+    name: "Sophisticated Man's Bath & Body Set",
     price: 1100,
     priceStr: "GH₵1,100.00",
     image: "/perfume bath and body for men package 3.jpg",
@@ -704,7 +704,7 @@ export const products: Product[] = [
   },
   {
     id: "p73",
-    name: "Luxury Grooming & Fragrance Set for Men 4",
+    name: "Premium Masculine Fragrance & Care Package",
     price: 1500,
     priceStr: "GH₵1,500.00",
     image: "/perfume bath and body for men package 4.jpg",
@@ -713,7 +713,7 @@ export const products: Product[] = [
   },
   {
     id: "p74",
-    name: "Luxury Grooming & Fragrance Set for Men 5",
+    name: "Modern Man's Luxury Grooming Essentials",
     price: 1450,
     priceStr: "GH₵1,450.00",
     image: "/perfume bath and body for men package 5.jpg",
@@ -722,7 +722,7 @@ export const products: Product[] = [
   },
   {
     id: "p75",
-    name: "Luxury Grooming & Fragrance Set for Men 6",
+    name: "Classic Male Fragrance & Body Ritual",
     price: 1250,
     priceStr: "GH₵1,250.00",
     image: "/perfume bath and body for men package 6.jpg",
@@ -731,11 +731,74 @@ export const products: Product[] = [
   },
   {
     id: "p76",
-    name: "Luxury Grooming & Fragrance Set for Men 7",
+    name: "Executive Scent & Skincare Selection for Him",
     price: 1600,
     priceStr: "GH₵1,600.00",
     image: "/perfume bath and body for men package 7.jpg",
     isOutOfStock: false,
     category: "Perfume, Bath & Body For Him"
+  },
+  {
+    id: "p77",
+    name: "Queen's Luxury Bath & Spa Collection",
+    price: 1200,
+    priceStr: "GH₵1,200.00",
+    image: "/women body and bath package 1.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p78",
+    name: "Elegant Floral Spa & Fragrance Delight",
+    price: 1450,
+    priceStr: "GH₵1,450.00",
+    image: "/women body and bath package 2.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p79",
+    name: "Ultimate Relaxation Bath & Body Hamper",
+    price: 1100,
+    priceStr: "GH₵1,100.00",
+    image: "/women body and bath package 3.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p80",
+    name: "Premium Rose & Vanilla Spa Ritual",
+    price: 1850,
+    priceStr: "GH₵1,850.00",
+    image: "/women body and bath package 4.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p81",
+    name: "Radiant Beauty Bath & Skincare Box",
+    price: 950,
+    priceStr: "GH₵950.00",
+    image: "/women body and bath package 5.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p82",
+    name: "Divine Goddess Scent & Spa Selection",
+    price: 2100,
+    priceStr: "GH₵2,100.00",
+    image: "/women body and bath package 6.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p83",
+    name: "Serene Lavender & Jasmine Pamper Set",
+    price: 1350,
+    priceStr: "GH₵1,350.00",
+    image: "/women body and bath package 7.jpg",
+    isOutOfStock: false,
+    category: "Perfume, Bath & Body For Her"
   }
 ];
