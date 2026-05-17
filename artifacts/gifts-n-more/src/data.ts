@@ -800,5 +800,77 @@ export const products: Product[] = [
     image: "/women body and bath package 7.jpg",
     isOutOfStock: false,
     category: "Perfume, Bath & Body For Her"
+  },
+  {
+    id: "p84",
+    name: "Elegant Trinket & Keepsake Box",
+    price: 650,
+    priceStr: "GH₵650.00",
+    image: "/other gifts package 1.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p85",
+    name: "Luxe Personal Care Gift Hamper",
+    price: 1250,
+    priceStr: "GH₵1,250.00",
+    image: "/other gifts package 2.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p86",
+    name: "Chic Lifestyle Essentials Collection",
+    price: 850,
+    priceStr: "GH₵850.00",
+    image: "/other gifts package 3.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p87",
+    name: "Premium Curated Surprise Gift Set",
+    price: 1550,
+    priceStr: "GH₵1,550.00",
+    image: "/other gifts package 4.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p88",
+    name: "Sophisticated Home & Living Gift",
+    price: 1100,
+    priceStr: "GH₵1,100.00",
+    image: "/other gifts package 5.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p89",
+    name: "Artisanal Crafted Gift Selection",
+    price: 950,
+    priceStr: "GH₵950.00",
+    image: "/other gifts package6.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p90",
+    name: "Modern Elegance Variety Package",
+    price: 1400,
+    priceStr: "GH₵1,400.00",
+    image: "/other gifts package 7.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
+  },
+  {
+    id: "p91",
+    name: "Ultimate Celebration Gift Assortment",
+    price: 1750,
+    priceStr: "GH₵1,750.00",
+    image: "/other gifts package 8.jpg",
+    isOutOfStock: false,
+    category: "Other Gift Items"
   }
 ];
