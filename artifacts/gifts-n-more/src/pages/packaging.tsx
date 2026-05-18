@@ -46,21 +46,22 @@ export default function PackagingPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <PlayCircle className="mb-3 h-10 w-10 opacity-50" />
                 <span className="font-medium uppercase tracking-widest text-xs text-center px-4">Hamper Packaging Process</span>
               </div>
-              <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
+              <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/5" />
             </motion.div>
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              transition={{ delay: 0.1 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <ImageIcon className="mb-3 h-10 w-10 opacity-50" />
@@ -72,8 +73,8 @@ export default function PackagingPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              transition={{ delay: 0.2 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <PlayCircle className="mb-3 h-10 w-10 opacity-50" />
@@ -85,8 +86,8 @@ export default function PackagingPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              transition={{ delay: 0.3 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <ImageIcon className="mb-3 h-10 w-10 opacity-50" />
@@ -98,8 +99,8 @@ export default function PackagingPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              transition={{ delay: 0.4 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <PlayCircle className="mb-3 h-10 w-10 opacity-50" />
@@ -111,8 +112,8 @@ export default function PackagingPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
-              transition={{ delay: 0.5 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-muted border border-border"
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+              className="group relative aspect-[4/5] overflow-hidden bg-card border border-border/80 rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <ImageIcon className="mb-3 h-10 w-10 opacity-50" />

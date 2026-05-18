@@ -27,7 +27,23 @@ import {
   Truck,
   X,
   Menu,
+  Instagram,
 } from "lucide-react";
+
+const Tiktok = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -361,7 +377,7 @@ export function HomePage(props: ShopProps) {
 
       <section className="border-b border-border/50 bg-card py-16 md:py-24">
         <div className="container mx-auto px-6 md:px-12">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 gap-12 divide-y divide-border text-center md:grid-cols-3 md:divide-x md:divide-y-0">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
             <ValueCard icon={<Gift className="h-6 w-6" />} title="Beautifully Packaged" text="Every item is wrapped with care, creating a memorable unboxing experience." />
             <ValueCard icon={<Star className="h-6 w-6" />} title="Curated Quality" text="Hand-picked premium items that speak volumes of your affection." />
             <ValueCard icon={<Truck className="h-6 w-6" />} title="Delivery in Accra" text="Swift and secure delivery to your loved ones across the city." />
@@ -834,7 +850,7 @@ function ProductGrid({ products: gridProducts, addToCart }: { products: Product[
 
 function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: (product: Product, quantity?: number) => void }) {
   return (
-    <div className="group relative flex h-full flex-col" data-testid={`card-product-${product.id}`}>
+    <div className="group relative flex h-full flex-col rounded-md border border-border/80 bg-card overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out" data-testid={`card-product-${product.id}`}>
       <Link href={`/cart/${product.id}#product-details`} className="relative block aspect-[3/4] overflow-hidden bg-muted">
         <img src={product.image} alt={product.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         <div className="absolute inset-x-0 bottom-0 translate-y-full bg-foreground/90 p-4 text-background transition-transform duration-300 group-hover:translate-y-0">
@@ -842,13 +858,13 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
             Open item cart <ArrowRight className="h-4 w-4" />
           </span>
         </div>
-        {product.isOutOfStock && <div className="absolute left-4 top-4 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Out of stock</div>}
+        {product.isOutOfStock && <div className="absolute left-4 top-4 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground rounded-full">Out of stock</div>}
       </Link>
-      <div className="flex flex-1 flex-col pt-5">
+      <div className="flex flex-1 flex-col p-5">
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{product.category}</p>
-        <Link href={`/cart/${product.id}#product-details`} className="font-serif text-xl leading-snug transition-colors hover:text-primary">{product.name}</Link>
+        <Link href={`/cart/${product.id}#product-details`} className="font-serif text-lg leading-snug transition-colors hover:text-primary line-clamp-2">{product.name}</Link>
         <div className="mt-auto flex items-center justify-between pt-5">
-          <p className="font-semibold">{product.priceStr}</p>
+          <p className="font-semibold text-lg">{product.priceStr}</p>
           <button disabled={product.isOutOfStock} onClick={() => onAddToCart(product, 1)} className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40" aria-label={`Quick add ${product.name}`} data-testid={`button-quick-add-${product.id}`}>
             <Plus className="h-4 w-4" />
           </button>
@@ -861,7 +877,7 @@ function ProductCard({ product, onAddToCart }: { product: Product; onAddToCart: 
 function CategoryTile({ category, product, onClick, index, compact = false }: { category: string; product?: Product; onClick: () => void; index: number; compact?: boolean }) {
   if (!product) {
     return (
-      <div className={cn("group relative overflow-hidden bg-muted animate-pulse", compact ? "aspect-[5/4]" : "aspect-[4/5]")} />
+      <div className={cn("group relative overflow-hidden bg-muted animate-pulse rounded-md", compact ? "aspect-[5/4]" : "aspect-[4/5]")} />
     );
   }
 
@@ -871,7 +887,7 @@ function CategoryTile({ category, product, onClick, index, compact = false }: { 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.035 }}
-      className={cn("group relative overflow-hidden bg-muted text-left", compact ? "aspect-[5/4]" : "aspect-[4/5]")}
+      className={cn("group relative overflow-hidden bg-muted text-left rounded-md shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out", compact ? "aspect-[5/4]" : "aspect-[4/5]")}
       onClick={onClick}
       data-testid={`button-category-${category}`}
     >
@@ -895,7 +911,7 @@ function CategoryChip({ label, active, onClick }: { label: string; active: boole
 
 function ValueCard({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
   return (
-    <motion.div variants={fadeUpVariant} className="px-6 pt-12 first:pt-0 md:pt-0">
+    <motion.div variants={fadeUpVariant} className="px-6 py-8 md:py-10 border border-border/40 bg-card rounded-md shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out">
       <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">{icon}</div>
       <h3 className="mb-3 font-serif text-2xl">{title}</h3>
       <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground">{text}</p>
@@ -977,7 +993,8 @@ function Footer() {
           <h4 className="mb-4 text-xs font-bold uppercase tracking-widest">Connect</h4>
           <div className="space-y-3 text-sm text-muted-foreground">
             <a href="https://wa.me/233558198832" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Phone className="h-4 w-4" /> +233 55 819 8832</a>
-            <a href="https://tiktok.com/@rossys.enterprise" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rossys.enterprise</a>
+            <a href="https://instagram.com/giftsnmoreshopgh" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Instagram className="h-4 w-4" /> @giftsnmoreshopgh</a>
+            <a href="https://tiktok.com/@rossys.enterprise" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Tiktok className="h-4 w-4" /> @rossys.enterprise</a>
             <a href="https://snapchat.com/add/rosemondadjet21" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><span className="font-semibold text-[15px] leading-none">@</span> rosemondadjet21</a>
             <a href="mailto:okangrosemond490@gmail.com" className="flex items-center gap-2 hover:text-primary"><Mail className="h-4 w-4" /> okangrosemond490@gmail.com</a>
           </div>

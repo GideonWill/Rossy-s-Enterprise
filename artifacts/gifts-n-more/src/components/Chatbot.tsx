@@ -256,7 +256,7 @@ export function Chatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-50 flex h-[550px] w-[350px] flex-col overflow-hidden border border-white/20 bg-background shadow-2xl backdrop-blur-xl md:w-[400px]"
+            className="fixed bottom-24 right-6 z-50 flex h-[480px] w-[310px] flex-col overflow-hidden border border-white/20 bg-background shadow-2xl backdrop-blur-xl md:w-[340px]"
           >
             {/* 1. Home View */}
             {currentView === "home" && (
@@ -269,22 +269,22 @@ export function Chatbot() {
                 </div>
 
                 {/* Big watermark logo background */}
-                <div className="absolute inset-0 top-12 flex items-center justify-center pointer-events-none z-0 opacity-[0.12]">
-                  <img src={logoSrc} alt="Rossy Logo Watermark" className="w-56 h-56 object-contain" />
+                <div className="absolute inset-0 top-8 flex items-center justify-center pointer-events-none z-0 opacity-[0.12]">
+                  <img src={logoSrc} alt="Rossy Logo Watermark" className="w-44 h-44 object-contain" />
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 flex flex-col justify-center px-6 z-10 text-center pb-8">
-                  <h2 className="text-xl md:text-2xl font-bold font-serif mb-4 leading-snug text-foreground">
+                <div className="flex-1 flex flex-col justify-center px-6 z-10 text-center pb-4 pt-4">
+                  <h2 className="text-lg md:text-xl font-bold font-serif mb-2 leading-snug text-foreground">
                     We are live and ready to chat with you now.
                   </h2>
-                  <p className="text-sm font-light text-muted-foreground">
+                  <p className="text-xs font-light text-muted-foreground">
                     Say something to start a live chat.
                   </p>
                 </div>
 
                 {/* New Conversation Card */}
-                <div className="px-6 z-10 mb-8">
+                <div className="px-6 z-10 mb-5">
                   <button
                     onClick={() => {
                       setMessages([
@@ -297,14 +297,14 @@ export function Chatbot() {
                       ]);
                       setCurrentView("chat");
                     }}
-                    className="w-full flex items-center justify-between rounded-2xl bg-card p-5 text-left shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-border"
+                    className="w-full flex items-center justify-between rounded-xl bg-card p-4 text-left shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border border-border"
                   >
                     <div>
-                      <h3 className="text-base font-bold text-foreground font-sans">New Conversation</h3>
-                      <p className="text-xs text-muted-foreground mt-0.5">We typically reply in a few minutes</p>
+                      <h3 className="text-sm font-bold text-foreground font-sans">New Conversation</h3>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">We typically reply in a few minutes</p>
                     </div>
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Send className="h-5 w-5 transform rotate-45 text-primary" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Send className="h-4.5 w-4.5 transform rotate-45 text-primary" />
                     </div>
                   </button>
                 </div>

@@ -64,7 +64,7 @@ function SoboloVideoCard() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="group relative aspect-video cursor-pointer overflow-hidden rounded border border-border bg-black shadow-lg"
+        className="group relative aspect-video cursor-pointer overflow-hidden rounded-md border border-border/80 bg-black shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
         onClick={openLightbox}
       >
         <video
@@ -77,7 +77,7 @@ function SoboloVideoCard() {
         />
         {/* Label */}
         <div className="absolute bottom-4 left-4">
-          <span className="bg-primary/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
+          <span className="bg-primary/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-primary-foreground rounded-full">
             For your Church Events
           </span>
         </div>
@@ -188,8 +188,8 @@ export default function SoboloPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="group relative aspect-video overflow-hidden rounded border border-border bg-muted"
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="group relative aspect-video overflow-hidden rounded-md border border-border/80 bg-card shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <ImageIcon className="mb-3 h-10 w-10 opacity-50" />
@@ -201,8 +201,8 @@ export default function SoboloPage(props: ShopProps) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="group relative aspect-video overflow-hidden rounded border border-border bg-muted"
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="group relative aspect-video overflow-hidden rounded-md border border-border/80 bg-card shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out"
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground">
                 <ImageIcon className="mb-3 h-10 w-10 opacity-50" />
