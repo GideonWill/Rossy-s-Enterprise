@@ -149,10 +149,10 @@ export function Chatbot() {
       let response = "I'm sorry, I don't have information on that yet. Would you like to [Chat with our Gifting Expert on WhatsApp](https://wa.me/233558198832) for more help?";
       
       const words = lowerText.split(/\s+/).map(w => w.replace(/[^\w]/g, ''));
-      let bestMatch = null;
+      let bestMatch: any = null;
       let highestScore = 0;
 
-      KNOWLEDGE_BASE.forEach(kb => {
+      for (const kb of KNOWLEDGE_BASE) {
         let score = 0;
         kb.keywords.forEach(kw => {
           if (words.includes(kw)) score += 3;
@@ -163,7 +163,7 @@ export function Chatbot() {
           highestScore = score;
           bestMatch = kb;
         }
-      });
+      }
 
       if (bestMatch && highestScore > 0) {
         response = bestMatch.answer;
