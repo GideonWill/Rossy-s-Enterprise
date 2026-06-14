@@ -184,12 +184,12 @@ export function Layout({ children, cartCount, searchProducts }: { children: Reac
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
       <nav
         className={cn(
-          "fixed top-0 z-50 flex w-full items-center justify-between px-6 transition-all duration-500 ease-in-out md:px-12",
-          scrolled ? "bg-background/95 py-4 shadow-sm backdrop-blur-md" : "bg-black/15 py-6 backdrop-blur-[2px]",
+          "fixed top-0 z-50 flex w-full items-center justify-between px-6 transition-[background-color,padding,shadow,backdrop-filter] duration-300 ease-in-out transform-gpu md:px-12",
+          scrolled ? "bg-background/95 py-3 md:py-4 shadow-sm backdrop-blur-md" : "bg-black/15 py-3 md:py-6 backdrop-blur-[2px]",
         )}
       >
         <Link href="/" className={cn("transition-opacity", scrolled ? "opacity-100" : "hover:opacity-80")} data-testid="link-home">
-          <img src={logoSrc} alt="ROSSY'S ENTERPRISE GIFTS & MORE" className={cn("w-auto object-contain transition-all", scrolled ? "h-10 md:h-12" : "h-14 md:h-20")} />
+          <img src={logoSrc} alt="ROSSY'S ENTERPRISE GIFTS & MORE" className={cn("w-auto object-contain transition-[height,opacity] duration-300", scrolled ? "h-10 md:h-12" : "h-10 md:h-20")} />
         </Link>
         <div className={cn("hidden items-center gap-6 text-sm font-medium uppercase tracking-wider md:flex lg:gap-8", scrolled ? "text-foreground" : "text-white")}>
           <Link href="/categories" className={cn("transition-colors hover:text-primary py-1", location === "/categories" && "border-b-2 border-primary text-primary")} data-testid="link-categories">Categories</Link>
